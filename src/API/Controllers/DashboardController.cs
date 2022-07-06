@@ -1,5 +1,7 @@
-﻿using DatabaseModel;
+﻿using API.DTOs;
+using DatabaseModel;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -182,9 +184,20 @@ namespace API.Controllers
                     response.Message = AppMessages.invalidParameters;
                     return Request.CreateResponse(HttpStatusCode.OK, response);
                 }
+                var masjidTiming = dbContext.PrayerTimings.Where(c => c.MasjidId == MasjidId).FirstOrDefault();
+
 
                 response.Error = false;
-                response.Data = dbContext.PrayerTimings.Where(c => c.MasjidId == MasjidId).FirstOrDefault();
+                response.Data = new PrayerTimingModel
+                {
+                    MasjidId = masjidTiming.MasjidId,
+                    Fajar = masjidTiming.Fajar.Hours.ToString("00") + ":" + masjidTiming.Fajar.Minutes.ToString("00"),
+                    Zohar = masjidTiming.Zohar.Hours.ToString("00") + ":" + masjidTiming.Fajar.Minutes.ToString("00"),
+                    Asar = masjidTiming.Asar.Hours.ToString("00") + ":" + masjidTiming.Fajar.Minutes.ToString("00"),
+                    Magrib = masjidTiming.Magrib.Hours.ToString("00") + ":" + masjidTiming.Fajar.Minutes.ToString("00"),
+                    Isha = masjidTiming.Isha.Hours.ToString("00") + ":" + masjidTiming.Fajar.Minutes.ToString("00"),
+                    Juma = masjidTiming.Juma.Hours.ToString("00") + ":" + masjidTiming.Fajar.Minutes.ToString("00")
+                };
                 response.Message = AppMessages.msgSuccess;
                 return Request.CreateResponse(HttpStatusCode.OK, response);
 
@@ -210,8 +223,23 @@ namespace API.Controllers
                     return Request.CreateResponse(HttpStatusCode.OK, response);
                 }
 
+                var lstNotifications = dbContext.PushNotifications.OrderByDescending(n => n.TimeStamp).Skip(PageNo * Length).Take(Length).ToList();
+
+                var lstResponse = new List<PushNotificationModel>();
+
+                foreach (var item in lstNotifications)
+                {
+                    lstResponse.Add(new PushNotificationModel
+                    {
+                        Id = item.Id,
+                        Description = item.Description,
+                        Title = item.Title,
+                        TimeStamp = item.TimeStamp.ToString("dd/MM/yyyy HH:mm")
+                    });
+                }
+
                 response.Error = false;
-                response.Data = dbContext.PushNotifications.OrderByDescending(n => n.TimeStamp).Skip(PageNo * Length).Take(Length).ToList();
+                response.Data = lstResponse;
                 response.Message = AppMessages.msgSuccess;
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }

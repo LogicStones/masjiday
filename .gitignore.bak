@@ -1,9 +1,6 @@
 src/.vs
 src/packages
 
-src/Admin/bin
-src/Admin/obj
-
 src/API/bin
 src/API/obj
 
