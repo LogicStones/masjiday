@@ -1,0 +1,16 @@
+Message :The default FirebaseApp already exists.<br/>
+StackTrace :   at FirebaseAdmin.FirebaseApp.Create(AppOptions options, String name)
+   at FirebaseAdmin.FirebaseApp.Create(AppOptions options)
+   at Integrations.CloudNotifications.InitializeFirebaseApp() in E:\LogicStones\AfriDelivery\src\kebap2goo\Integrations\FirebaseIntegration.cs:line 198
+Date :6/29/2021 5:39:52 PM
+
+-----------------------------------------------------------------------------
+
+Message :The default FirebaseApp already exists.<br/>
+StackTrace :   at FirebaseAdmin.FirebaseApp.Create(AppOptions options, String name)
+   at FirebaseAdmin.FirebaseApp.Create(AppOptions options)
+   at Integrations.CloudNotifications.InitializeFirebaseApp() in E:\LogicStones\AfriDelivery\src\kebap2goo\Integrations\FirebaseIntegration.cs:line 198
+Date :6/29/2021 5:40:11 PM
+
+-----------------------------------------------------------------------------
+

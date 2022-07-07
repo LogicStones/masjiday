@@ -12,6 +12,8 @@ namespace DatabaseModel
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class masjidayEntities : DbContext
     {
@@ -31,5 +33,30 @@ namespace DatabaseModel
         public virtual DbSet<PrayerTiming> PrayerTimings { get; set; }
         public virtual DbSet<PushNotification> PushNotifications { get; set; }
         public virtual DbSet<RegisteredDevice> RegisteredDevices { get; set; }
+    
+        public virtual ObjectResult<FetchNotificationsForAdmin_Result> FetchNotificationsForAdmin(Nullable<int> displayLength, Nullable<int> displayStart, Nullable<int> sortCol, string sortOrder, string search)
+        {
+            var displayLengthParameter = displayLength.HasValue ?
+                new ObjectParameter("DisplayLength", displayLength) :
+                new ObjectParameter("DisplayLength", typeof(int));
+    
+            var displayStartParameter = displayStart.HasValue ?
+                new ObjectParameter("DisplayStart", displayStart) :
+                new ObjectParameter("DisplayStart", typeof(int));
+    
+            var sortColParameter = sortCol.HasValue ?
+                new ObjectParameter("SortCol", sortCol) :
+                new ObjectParameter("SortCol", typeof(int));
+    
+            var sortOrderParameter = sortOrder != null ?
+                new ObjectParameter("SortOrder", sortOrder) :
+                new ObjectParameter("SortOrder", typeof(string));
+    
+            var searchParameter = search != null ?
+                new ObjectParameter("Search", search) :
+                new ObjectParameter("Search", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FetchNotificationsForAdmin_Result>("FetchNotificationsForAdmin", displayLengthParameter, displayStartParameter, sortColParameter, sortOrderParameter, searchParameter);
+        }
     }
 }

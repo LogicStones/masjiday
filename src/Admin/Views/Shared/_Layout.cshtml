@@ -1,44 +1,138 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <!-- Meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <!-- Vendor CSS -->
+
+    @Styles.Render("~/Content/css/Allcss.css")
+
+    @RenderSection("stylesheet", required: false)
+
+
+    <link rel="stylesheet" href="~/vendor/themify-icons/themify-icons.css" />
+    <link rel="stylesheet" href="~/vendor/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/vendor/ionicons/css/ionicons.min.css" />
+    <link rel="stylesheet" href="~/vendor/pe7-icons/assets/Pe-icon-7-stroke.css">
+    <link rel="stylesheet" href="~/Content/css/core.css" />
+
+    <!-- Neptune CSS -->
+    @*<link href="~/Content/css/override.css" rel="stylesheet" />*@
+    <title>@ViewBag.Title - Masjiday Admin</title>
 
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" title="more options">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+
+<body class="large-sidebar fixed-sidebar fixed-header content-appear">
+    <div class="wrapper">
+
+        <!-- Sidebar -->
+        <div class="site-sidebar-overlay"></div>
+        <div class="site-sidebar">
+            <a class="logo" href="/Home/Index">
+                <img src="~/img/logo/logo.png" style="height:60px" />
+                @*<img width="150px" src="@(ConfigurationManager.AppSettings["ResellerUrl"] + Profiler.CompanyLogo.Replace("~",""))" />*@
+            </a>
+            <div class="custom-scroll custom-scroll-light">
+                <ul class="sidebar-menu">
+                    <li class="menu-title m-t-0-5"></li>
+                    <li class="with-sub">
+                        <a href="#" class="waves-effect waves-light">
+                            <span class="s-caret"><i class="fa fa-angle-down"></i></span>
+                            <span class="s-icon"><i class="fa fa-bell"></i></span>
+                            <span class="s-text">Notifications</span>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="/Home/Index" class="waves-effect waves-light">
+                                    <span class="s-text">Send New</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/Home/History" class="waves-effect waves-light">
+                                    <span class="s-text">History</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
-                @Html.Partial("_LoginPartial")
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+        {
+            @Html.AntiForgeryToken()
+            <!-- Header -->
+            <div class="site-header">
+                <nav class="navbar navbar-light">
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item m-r-1 hidden-lg-up">
+                            <a class="nav-link collapse-button" href="#">
+                                <i class="ti-menu"></i>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="nav navbar-nav pull-xs-right">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#" data-toggle="dropdown" aria-expanded="false">
+                                <div class="avatar box-32">
+                                    <img src="~/img/admin.jpg" alt="">
+                                </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right animated flipInY">
+                                @*<a class="dropdown-item" href="/Order/Index"><i class="fa fa-first-order m-r-0-5"></i> Orders</a>
+                                    <a class="dropdown-item" href="/User/Index"><i class="ti-user m-r-0-5"></i> Users</a>
+                                    <a class="dropdown-item" href="/Transaction/Index"><i class="fa fa-euro m-r-0-5"></i> Transactions</a>
+                                    <div class="dropdown-divider"></div>*@
+                                <a class="dropdown-item" href="/Manage/ChangePassword"><i class="ti-settings m-r-0-5"></i> Change Password</a>
+                                @*<div class="dropdown-divider"></div>*@
+                                <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()"><i class="ti-power-off m-r-0-5"></i> Sign Out</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <label class="pull-xs-right" style="font-weight: 900; margin-top: 25px; margin-right:10px;">Welcome, Admin !!</label>
+                </nav>
+            </div>
+        }
+
+        <div class="site-content">
+
+            <div class="content-area p-y-1">
+                <div class="container-fluid" ng-app="genericModule">
+                    <h4>
+                        @ViewBag.Title
+                    </h4>
+
+                    <ol class="breadcrumb no-bg m-b-1">
+                        @if (ViewContext.RouteData.Values["controller"].ToString() != "Home")
+                        {
+                            <li class="breadcrumb-item">@Html.ActionLink("Home", "Index", "Home")</li>
+                            if (ViewContext.RouteData.Values["controller"].ToString() != "Home")
+                            {
+                                <li class="breadcrumb-item">@Html.ActionLink(string.Concat(ViewContext.RouteData.Values["controller"].ToString().Select(x => Char.IsUpper(x) ? " " + x : x.ToString())).TrimStart(' '), "Index", ViewContext.RouteData.Values["controller"].ToString())</li>
+                            }
+                            if (ViewContext.RouteData.Values["action"].ToString() != "Index")
+                            {
+                                <li class="breadcrumb-item active">@(string.Concat(ViewContext.RouteData.Values["action"].ToString().Select(x => Char.IsUpper(x) ? " " + x : x.ToString())).TrimStart(' '))</li>
+                            }
+                        }
+                    </ol>
+                    @RenderBody()
+                </div>
+            </div>
+            <!-- Footer -->
+            @*<footer class="footer">
+                    <div class="container-fluid">
+                        Powered by <a href="https://logicstones.com/" target="_blank">LogicStones</a> © @DateTime.Now.Year
+                    </div>
+                </footer>*@
+        </div>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/vendor/Alljs.js")
     @RenderSection("scripts", required: false)
+
 </body>
 </html>
