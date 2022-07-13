@@ -7,8 +7,17 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     <!-- Vendor CSS -->
+    @*@Styles.Render("~/Content/css/Allcss.css")*@
 
-    @Styles.Render("~/Content/css/Allcss.css")
+    <link href="/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="/vendor/animate.css/animate.css" rel="stylesheet" />
+    <link href="/vendor/sweetalert2/sweetalert2.css" rel="stylesheet" />
+    <link href="/vendor/DataTables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="/vendor/DataTables/Responsive/css/responsive.bootstrap4.min.css" rel="stylesheet" />
+    <link href="/vendor/DataTables/Buttons/css/buttons.dataTables.css" rel="stylesheet" />
+    <link href="/vendor/DataTables/Buttons/css/buttons.bootstrap4.min.css" rel="stylesheet" />
+
+
 
     @RenderSection("stylesheet", required: false)
 
@@ -131,7 +140,33 @@
         </div>
     </div>
 
-    @Scripts.Render("~/vendor/Alljs.js")
+    @*@Scripts.Render("~/vendor/Alljs.js")*@
+
+    <script src="/vendor/jquery/jquery-1.12.3.js"></script>
+    <script src="/Scripts/jquery.validate.js"></script>
+    <script src="/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="/vendor/tether/js/tether.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.js"></script>
+    <script src="/vendor/detectmobilebrowser/detectmobilebrowser.js"></script>
+    <script src="/vendor/DataTables/js/jquery.dataTables.js"></script>
+    <script src="/vendor/DataTables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/vendor/DataTables/Responsive/js/dataTables.responsive.js"></script>
+    <script src="/vendor/DataTables/Responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="/vendor/DataTables/Buttons/js/dataTables.buttons.js"></script>
+    <script src="/vendor/DataTables/Buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="/vendor/DataTables/JSZip/jszip.js"></script>
+    <script src="/vendor/DataTables/pdfmake/build/pdfmake.js"></script>
+    <script src="/vendor/DataTables/pdfmake/build/vfs_fonts.js"></script>
+    <script src="/vendor/DataTables/Buttons/js/buttons.html5.js"></script>
+    <script src="/vendor/DataTables/Buttons/js/buttons.print.js"></script>
+    <script src="/vendor/DataTables/Buttons/js/buttons.colVis.min.js"></script>
+    <script src="/Scripts/js/app.js"></script>
+    <script src="/Scripts/js/tables-datatable.js"></script>
+    <script src="/vendor/sweetalert2/sweetalert2.min.js"></script>
+    <script src="/Angular/Method.js"></script>
+    <script src="/Scripts/angular.js"></script>
+    <script src="/Angular/Module.js"></script>
+
     @RenderSection("scripts", required: false)
 
 </body>

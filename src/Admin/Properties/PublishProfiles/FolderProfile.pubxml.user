@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\Users\Ahmad Ahsan\Desktop\Publish\Masjiday\Admin</_PublishTargetUrl>
-    <History>True|2022-07-07T15:53:32.4604531Z;True|2022-07-07T20:33:51.8572098+05:00;</History>
+    <History>True|2022-07-13T11:24:15.5820038Z;True|2022-07-07T20:53:32.4604531+05:00;True|2022-07-07T20:33:51.8572098+05:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="Angular/Method.js">
@@ -24,10 +24,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>07/07/2022 19:58:55</publishTime>
     </File>
     <File Include="bin/Admin.dll">
-      <publishTime>07/07/2022 20:33:27</publishTime>
+      <publishTime>07/13/2022 16:23:37</publishTime>
     </File>
     <File Include="bin/Admin.pdb">
-      <publishTime>07/07/2022 20:33:27</publishTime>
+      <publishTime>07/13/2022 16:23:37</publishTime>
     </File>
     <File Include="bin/Antlr3.Runtime.dll">
       <publishTime>09/10/2013 21:29:20</publishTime>
