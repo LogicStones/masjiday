@@ -2336,7 +2336,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="AppSettingsSecrets.config" />
-    <Content Include="firebase-adminsdk-afrideliveries-service-account.json" />
+    <Content Include="masjiday-firebase-adminsdk-service-account.json" />
     <None Include="packages.config" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />

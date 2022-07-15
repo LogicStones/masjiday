@@ -194,7 +194,7 @@ namespace Admin.Integrations
 
                 var defaultApp = FirebaseApp.Create(new AppOptions
                 {
-                    Credential = GoogleCredential.FromFile(AppDomain.CurrentDomain.BaseDirectory + "firebase-adminsdk-afrideliveries-service-account.json")
+                    Credential = GoogleCredential.FromFile(AppDomain.CurrentDomain.BaseDirectory + "masjiday-firebase-adminsdk-service-account.json")
                 });
             }
             catch (Exception ex)

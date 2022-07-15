@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="8601cfcf04994664b90763a378ef2b87" Name="Diagram1">
+      <Diagram DiagramId="8601cfcf04994664b90763a378ef2b87" Name="Diagram1" ZoomLevel="97">
         <EntityTypeShape EntityType="masjidayModel.City" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="masjidayModel.Country" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="masjidayModel.Masajid" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />

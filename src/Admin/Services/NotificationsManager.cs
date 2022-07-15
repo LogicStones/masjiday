@@ -29,6 +29,8 @@ namespace Admin.Services
                             },
                     lstTokens
                 );
+
+            SaveNotification(model.Description, model.Title);
         }
 
         public static CallBackData FetchAllNotifications(Paging paging)
@@ -58,9 +60,18 @@ namespace Admin.Services
             return callBackData;
         }
 
-        public static void GetNotificationDetails(int NotificationId)
+        public static void SaveNotification(string Title, string Description)
         {
-            
+            using (var dbContext = new masjidayEntities())
+            {
+                dbContext.PushNotifications.Add(new PushNotification
+                {
+                    Description = Description,
+                    TimeStamp = DateTime.Now,
+                    Title = Title
+                });
+                dbContext.SaveChanges();
+            }
         }
     }
 }
