@@ -30,7 +30,7 @@ namespace Admin.Services
                     lstTokens
                 );
 
-            SaveNotification(model.Description, model.Title);
+            SaveNotification(model.Title, model.Description);
         }
 
         public static CallBackData FetchAllNotifications(Paging paging)
