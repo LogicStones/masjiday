@@ -33,6 +33,8 @@ namespace DatabaseModel
         public virtual DbSet<PrayerTiming> PrayerTimings { get; set; }
         public virtual DbSet<PushNotification> PushNotifications { get; set; }
         public virtual DbSet<RegisteredDevice> RegisteredDevices { get; set; }
+        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<ReadNotification> ReadNotifications { get; set; }
     
         public virtual ObjectResult<FetchNotificationsForAdmin_Result> FetchNotificationsForAdmin(Nullable<int> displayLength, Nullable<int> displayStart, Nullable<int> sortCol, string sortOrder, string search)
         {

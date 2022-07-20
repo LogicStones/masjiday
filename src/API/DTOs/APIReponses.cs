@@ -16,11 +16,18 @@ namespace API.DTOs
         public string Juma { get; set; }
     }
 
-    public partial class PushNotificationModel
+    public class PushNotificationsModel
+    {
+        public int UnreadNotifications { get; set; }
+        public List<NotificationDetails> Notifications { get; set; }
+    }
+
+    public class NotificationDetails
     {
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string TimeStamp { get; set; }
+        public string IsRead { get; set; } = "false";
     }
 }

@@ -14,6 +14,9 @@ namespace Admin.Services
 {
     public static class NotificationsManager
     {
+
+        #region Admin
+
         public static async Task SendPushNotifications(Notification model)
         {
             var lstTokens = DevicesManager.GetAllDevicesToken();
@@ -73,5 +76,27 @@ namespace Admin.Services
                 dbContext.SaveChanges();
             }
         }
+
+        #endregion
+
+        #region API
+
+        public static async Task SendPrayerNotifications(string title, string body, List<string> lstDevicesToken)
+        {
+            await CloudNotifications.BroadCastFCM
+                (
+                    body,
+                    ConfigurationManager.AppSettings["LogoURL"],
+                    title,
+                    new Dictionary<string, string>
+                            {
+                                { "MessageKey", "prayer_alert" }
+                            },
+                    lstDevicesToken
+                );
+        }
+
+        #endregion
+
     }
 }
