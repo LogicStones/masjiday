@@ -44,6 +44,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="CityId" Type="int" Nullable="false" />
+          <Property Name="OffSet" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="PrayerTimings">
           <Key>
@@ -119,14 +120,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
-        <EntityType Name="Masajid">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CityId" Type="Int32" Nullable="false" />
-        </EntityType>
         <EntityType Name="PrayerTiming">
           <Key>
             <PropertyRef Name="Id" />
@@ -160,7 +153,6 @@
         <EntityContainer Name="masjidayEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Cities" EntityType="Self.City" />
           <EntitySet Name="Countries" EntityType="Self.Country" />
-          <EntitySet Name="Masajids" EntityType="Self.Masajid" />
           <EntitySet Name="PrayerTimings" EntityType="Self.PrayerTiming" />
           <EntitySet Name="PushNotifications" EntityType="Self.PushNotification" />
           <EntitySet Name="RegisteredDevices" EntityType="Self.RegisteredDevice" />
@@ -173,6 +165,7 @@
           </FunctionImport>
           <EntitySet Name="AspNetUsers" EntityType="masjidayModel.AspNetUser" />
           <EntitySet Name="ReadNotifications" EntityType="masjidayModel.ReadNotification" />
+          <EntitySet Name="Masajids" EntityType="masjidayModel.Masajid" />
         </EntityContainer>
         <ComplexType Name="FetchNotificationsForAdmin_Result">
           <Property Type="Int64" Name="RowNo" Nullable="true" />
@@ -207,6 +200,15 @@
           <Property Name="DeviceId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="NotificationId" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="Masajid">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CityId" Type="Int32" Nullable="false" />
+          <Property Name="OffSet" Type="Int32" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -227,15 +229,6 @@
               <MappingFragment StoreEntitySet="Countries">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Masajids">
-            <EntityTypeMapping TypeName="masjidayModel.Masajid">
-              <MappingFragment StoreEntitySet="Masajid">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="CityId" ColumnName="CityId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -307,6 +300,16 @@
               <MappingFragment StoreEntitySet="ReadNotifications">
                 <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
                 <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Masajids">
+            <EntityTypeMapping TypeName="masjidayModel.Masajid">
+              <MappingFragment StoreEntitySet="Masajid">
+                <ScalarProperty Name="OffSet" ColumnName="OffSet" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

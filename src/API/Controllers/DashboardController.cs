@@ -3,6 +3,7 @@ using API.DTOs;
 using DatabaseModel;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -188,11 +189,11 @@ namespace API.Controllers
                 {
                     MasjidId = masjidTiming.MasjidId,
                     Fajar = masjidTiming.Fajar.Hours.ToString("00") + ":" + masjidTiming.Fajar.Minutes.ToString("00"),
-                    Zohar = masjidTiming.Zohar.Hours.ToString("00") + ":" + masjidTiming.Fajar.Minutes.ToString("00"),
-                    Asar = masjidTiming.Asar.Hours.ToString("00") + ":" + masjidTiming.Fajar.Minutes.ToString("00"),
-                    Magrib = masjidTiming.Magrib.Hours.ToString("00") + ":" + masjidTiming.Fajar.Minutes.ToString("00"),
-                    Isha = masjidTiming.Isha.Hours.ToString("00") + ":" + masjidTiming.Fajar.Minutes.ToString("00"),
-                    Juma = masjidTiming.Juma.Hours.ToString("00") + ":" + masjidTiming.Fajar.Minutes.ToString("00")
+                    Zohar = masjidTiming.Zohar.Hours.ToString("00") + ":" + masjidTiming.Zohar.Minutes.ToString("00"),
+                    Asar = masjidTiming.Asar.Hours.ToString("00") + ":" + masjidTiming.Asar.Minutes.ToString("00"),
+                    Magrib = masjidTiming.Magrib.Hours.ToString("00") + ":" + masjidTiming.Magrib.Minutes.ToString("00"),
+                    Isha = masjidTiming.Isha.Hours.ToString("00") + ":" + masjidTiming.Isha.Minutes.ToString("00"),
+                    Juma = masjidTiming.Juma.Hours.ToString("00") + ":" + masjidTiming.Juma.Minutes.ToString("00")
                 };
                 response.Message = AppMessages.msgSuccess;
                 return Request.CreateResponse(HttpStatusCode.OK, response);
@@ -309,36 +310,44 @@ namespace API.Controllers
         {
             try
             {
-                string prayerName = string.Empty;
-                int minutesDifference = 15;
-                var currentTime = DateTime.Now.TimeOfDay;
+                var lstMasajid = dbContext.Masajids.ToList();
 
-                var lstPrayerTimings = dbContext.PrayerTimings.ToList();
-                var lstRegisteredDevices = dbContext.RegisteredDevices.ToList();
+                
 
-                foreach (var t in lstPrayerTimings)
+                foreach (var m in lstMasajid)
                 {
-                    if (t.Fajar.Subtract(currentTime).TotalMinutes > 0 && t.Fajar.Subtract(currentTime).TotalMinutes <= minutesDifference)
-                        prayerName = "Fajar";
-                    else if ((t.Juma.Subtract(currentTime).TotalMinutes > 0 && t.Juma.Subtract(currentTime).TotalMinutes <= minutesDifference && DateTime.Now.DayOfWeek == DayOfWeek.Friday) ||
-                        (t.Zohar.Subtract(currentTime).TotalMinutes > 0 && t.Zohar.Subtract(currentTime).TotalMinutes <= minutesDifference))
-                        prayerName = DateTime.Now.DayOfWeek == DayOfWeek.Friday ? "Juma" : "Zohar";
-                    else if (t.Asar.Subtract(currentTime).TotalMinutes > 0 && t.Asar.Subtract(currentTime).TotalMinutes <= minutesDifference)
-                        prayerName = "Asar";
-                    else if (t.Magrib.Subtract(currentTime).TotalMinutes > 0 && t.Magrib.Subtract(currentTime).TotalMinutes <= minutesDifference)
-                        prayerName = "Magrib";
-                    else if (t.Isha.Subtract(currentTime).TotalMinutes > 0 && t.Isha.Subtract(currentTime).TotalMinutes <= minutesDifference)
-                        prayerName = "Isha";
+                    string prayerName = string.Empty;
+                    int minutesDifference = int.Parse(ConfigurationManager.AppSettings["PreNotificationInterval"].ToString()); //15;
+                    //var currentTime = DateTime.Now.TimeOfDay;
+                    var currentTime = DateTime.UtcNow.AddMinutes(m.OffSet).TimeOfDay;
 
-                    if (!string.IsNullOrEmpty(prayerName))
+
+                    var lstPrayerTimings = dbContext.PrayerTimings.ToList();
+                    var lstRegisteredDevices = dbContext.RegisteredDevices.ToList();
+
+                    foreach (var t in lstPrayerTimings)
                     {
-                        var lstDeviceTokens = lstRegisteredDevices.Where(rd => rd.MasjidId == t.MasjidId).Select(rd => rd.DeviceToken).ToList();
+                        if (t.Fajar.Subtract(currentTime).TotalMinutes > 0 && t.Fajar.Subtract(currentTime).TotalMinutes <= minutesDifference)
+                            prayerName = "Fajar";
+                        else if ((t.Juma.Subtract(currentTime).TotalMinutes > 0 && t.Juma.Subtract(currentTime).TotalMinutes <= minutesDifference && DateTime.Now.DayOfWeek == DayOfWeek.Friday) ||
+                            (t.Zohar.Subtract(currentTime).TotalMinutes > 0 && t.Zohar.Subtract(currentTime).TotalMinutes <= minutesDifference))
+                            prayerName = DateTime.Now.DayOfWeek == DayOfWeek.Friday ? "Juma" : "Zohar";
+                        else if (t.Asar.Subtract(currentTime).TotalMinutes > 0 && t.Asar.Subtract(currentTime).TotalMinutes <= minutesDifference)
+                            prayerName = "Asar";
+                        else if (t.Magrib.Subtract(currentTime).TotalMinutes > 0 && t.Magrib.Subtract(currentTime).TotalMinutes <= minutesDifference)
+                            prayerName = "Magrib";
+                        else if (t.Isha.Subtract(currentTime).TotalMinutes > 0 && t.Isha.Subtract(currentTime).TotalMinutes <= minutesDifference)
+                            prayerName = "Isha";
 
-                        if (lstDeviceTokens.Any())
-                            await NotificationsManager.SendPrayerNotifications(prayerName + "Prayer", prayerName + "Prayer after 15 minutes.", lstDeviceTokens);
+                        if (!string.IsNullOrEmpty(prayerName))
+                        {
+                            var lstDeviceTokens = lstRegisteredDevices.Where(rd => rd.MasjidId == t.MasjidId).Select(rd => rd.DeviceToken).ToList();
+
+                            if (lstDeviceTokens.Any())
+                                await NotificationsManager.SendPrayerNotifications(prayerName + "Prayer", prayerName + "Prayer after 15 minutes.", lstDeviceTokens);
+                        }
                     }
                 }
-
                 response.Error = false;
                 response.Message = AppMessages.msgSuccess;
                 return Request.CreateResponse(HttpStatusCode.OK, response);

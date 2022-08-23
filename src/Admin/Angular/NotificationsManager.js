@@ -33,7 +33,12 @@
             url: "/Home/FetchNotifications",
             postData: $scope.notification,
             bindingData: [
-                { "data": "TimeStamp" },
+                {
+                    "render": function (data, type, row) {
+                        return GetLocaleDateTime(row.TimeStamp);
+                    }
+                },
+                //{ "data": "TimeStamp" },
                 { "data": "Title" },
                 { "data": "Description" }
                 //,

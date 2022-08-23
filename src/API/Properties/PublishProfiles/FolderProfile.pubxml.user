@@ -5,9 +5,21 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\Users\Ahmad Ahsan\Desktop\Publish\Masjiday\API</_PublishTargetUrl>
-    <History>True|2022-07-18T14:24:59.7030964Z;True|2022-07-06T13:52:01.3863500+05:00;True|2022-07-04T12:39:07.4918375+05:00;True|2022-07-04T12:27:53.9590638+05:00;</History>
+    <History>True|2022-08-11T14:35:58.9073495Z;True|2022-08-10T17:23:58.6563487+05:00;True|2022-08-01T20:36:00.9902775+05:00;True|2022-08-01T20:15:56.0155936+05:00;True|2022-07-20T14:11:54.6475328+05:00;True|2022-07-18T19:24:59.7030964+05:00;True|2022-07-06T13:52:01.3863500+05:00;True|2022-07-04T12:39:07.4918375+05:00;True|2022-07-04T12:27:53.9590638+05:00;</History>
   </PropertyGroup>
   <ItemGroup>
+    <File Include="AppSettingsSecrets.config">
+      <publishTime>08/11/2022 19:29:52</publishTime>
+    </File>
+    <File Include="bin/Admin.dll">
+      <publishTime>08/11/2022 19:35:53</publishTime>
+    </File>
+    <File Include="bin/Admin.dll.config">
+      <publishTime>07/20/2022 13:05:42</publishTime>
+    </File>
+    <File Include="bin/Admin.pdb">
+      <publishTime>08/11/2022 19:35:53</publishTime>
+    </File>
     <File Include="bin/Antlr3.Runtime.dll">
       <publishTime>09/10/2013 21:29:20</publishTime>
     </File>
@@ -15,19 +27,19 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/10/2013 21:29:20</publishTime>
     </File>
     <File Include="bin/API.dll">
-      <publishTime>07/18/2022 19:24:53</publishTime>
+      <publishTime>08/11/2022 19:35:56</publishTime>
     </File>
     <File Include="bin/API.pdb">
-      <publishTime>07/18/2022 19:24:53</publishTime>
+      <publishTime>08/11/2022 19:35:56</publishTime>
     </File>
     <File Include="bin/DatabaseModel.dll">
-      <publishTime>07/18/2022 19:24:51</publishTime>
+      <publishTime>08/01/2022 20:15:46</publishTime>
     </File>
     <File Include="bin/DatabaseModel.dll.config">
       <publishTime>07/02/2022 15:11:40</publishTime>
     </File>
     <File Include="bin/DatabaseModel.pdb">
-      <publishTime>07/18/2022 19:24:51</publishTime>
+      <publishTime>08/01/2022 20:15:46</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>10/23/2017 18:15:18</publishTime>
@@ -35,14 +47,77 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="bin/EntityFramework.SqlServer.dll">
       <publishTime>10/23/2017 18:15:20</publishTime>
     </File>
+    <File Include="bin/FirebaseAdmin.dll">
+      <publishTime>04/14/2021 23:43:10</publishTime>
+    </File>
+    <File Include="bin/Google.Api.Gax.dll">
+      <publishTime>09/24/2020 17:17:24</publishTime>
+    </File>
+    <File Include="bin/Google.Api.Gax.pdb">
+      <publishTime>09/24/2020 17:17:24</publishTime>
+    </File>
+    <File Include="bin/Google.Api.Gax.Rest.dll">
+      <publishTime>09/24/2020 17:17:26</publishTime>
+    </File>
+    <File Include="bin/Google.Api.Gax.Rest.pdb">
+      <publishTime>09/24/2020 17:17:26</publishTime>
+    </File>
+    <File Include="bin/Google.Apis.Auth.dll">
+      <publishTime>08/17/2020 21:09:02</publishTime>
+    </File>
+    <File Include="bin/Google.Apis.Auth.pdb">
+      <publishTime>08/17/2020 21:09:02</publishTime>
+    </File>
+    <File Include="bin/Google.Apis.Core.dll">
+      <publishTime>08/17/2020 21:08:52</publishTime>
+    </File>
+    <File Include="bin/Google.Apis.Core.pdb">
+      <publishTime>08/17/2020 21:08:52</publishTime>
+    </File>
+    <File Include="bin/Google.Apis.dll">
+      <publishTime>08/17/2020 21:08:52</publishTime>
+    </File>
+    <File Include="bin/Google.Apis.pdb">
+      <publishTime>08/17/2020 21:08:52</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Identity.Core.dll">
+      <publishTime>11/25/2019 10:57:50</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Identity.EntityFramework.dll">
+      <publishTime>11/25/2019 10:57:50</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Identity.Owin.dll">
+      <publishTime>11/25/2019 10:57:50</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Bcl.AsyncInterfaces.dll">
+      <publishTime>09/13/2019 07:28:52</publishTime>
+    </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>09/05/2018 21:10:50</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.dll">
+      <publishTime>01/18/2019 20:50:30</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Host.SystemWeb.dll">
+      <publishTime>01/18/2019 20:50:50</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Security.Cookies.dll">
+      <publishTime>01/18/2019 20:50:30</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Security.dll">
+      <publishTime>01/18/2019 20:51:10</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Security.OAuth.dll">
+      <publishTime>01/18/2019 20:51:00</publishTime>
     </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
       <publishTime>07/25/2012 16:48:56</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>04/22/2019 06:06:16</publishTime>
+    </File>
+    <File Include="bin/Owin.dll">
+      <publishTime>11/13/2012 17:19:34</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>08/08/2018 10:38:48</publishTime>
@@ -191,8 +266,26 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="bin/roslyn/VBCSCompiler.exe.config">
       <publishTime>08/08/2018 17:18:16</publishTime>
     </File>
+    <File Include="bin/System.Buffers.dll">
+      <publishTime>02/19/2020 15:05:18</publishTime>
+    </File>
+    <File Include="bin/System.Collections.Immutable.dll">
+      <publishTime>04/15/2020 03:39:26</publishTime>
+    </File>
+    <File Include="bin/System.Memory.dll">
+      <publishTime>02/19/2020 15:05:18</publishTime>
+    </File>
     <File Include="bin/System.Net.Http.Formatting.dll">
       <publishTime>11/28/2018 18:00:36</publishTime>
+    </File>
+    <File Include="bin/System.Numerics.Vectors.dll">
+      <publishTime>05/15/2018 18:29:44</publishTime>
+    </File>
+    <File Include="bin/System.Runtime.CompilerServices.Unsafe.dll">
+      <publishTime>02/19/2020 15:05:16</publishTime>
+    </File>
+    <File Include="bin/System.Threading.Tasks.Extensions.dll">
+      <publishTime>11/29/2018 20:39:20</publishTime>
     </File>
     <File Include="bin/System.Web.Helpers.dll">
       <publishTime>11/28/2018 18:04:24</publishTime>
@@ -233,8 +326,11 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Global.asax">
       <publishTime>07/02/2022 12:58:25</publishTime>
     </File>
+    <File Include="img/logo/logo.png">
+      <publishTime>07/07/2022 16:20:48</publishTime>
+    </File>
     <File Include="Web.config">
-      <publishTime>07/06/2022 13:52:00</publishTime>
+      <publishTime>07/20/2022 14:11:53</publishTime>
     </File>
   </ItemGroup>
 </Project>

@@ -28,6 +28,26 @@
 
 });
 
+function GetLocaleDateTime(utcDateTime) {
+    var temp = new Date(utcDateTime + " UTC");
+
+    var date = GetTwoDigitNumber(temp.getDate()) + '/' + GetTwoDigitNumber(temp.getMonth() + 1) + '/' + temp.getFullYear();
+    var time = GetTwoDigitNumber(temp.getHours()) + ":" + GetTwoDigitNumber(temp.getMinutes()); //+ ":" + GetTwoDigitNumber(temp.getSeconds());
+    var dateTime = date + ' ' + time;
+
+    return dateTime;
+}
+
+function GetLocaleDate(utcDateTime) {
+    var temp = new Date(utcDateTime + " UTC");
+    return GetTwoDigitNumber(temp.getDate()) + '/' + GetTwoDigitNumber(temp.getMonth() + 1) + '/' + temp.getFullYear();
+}
+
+function GetTwoDigitNumber(num) {
+    return ("0" + num).slice(-2);
+}
+
+
 function isNumber(evt) {
     evt = (evt) ? evt : window.event;
     var charCode = (evt.which) ? evt.which : evt.keyCode;

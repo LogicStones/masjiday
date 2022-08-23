@@ -7,12 +7,12 @@
       <Diagram DiagramId="8601cfcf04994664b90763a378ef2b87" Name="Diagram1" ZoomLevel="97">
         <EntityTypeShape EntityType="masjidayModel.City" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="masjidayModel.Country" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="masjidayModel.Masajid" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="masjidayModel.PrayerTiming" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="masjidayModel.PushNotification" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="masjidayModel.RegisteredDevice" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="masjidayModel.AspNetUser" Width="1.5" PointX="7.125" PointY="3.125" />
         <EntityTypeShape EntityType="masjidayModel.ReadNotification" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="masjidayModel.Masajid" Width="1.5" PointX="0.625" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

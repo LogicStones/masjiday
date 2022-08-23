@@ -70,7 +70,7 @@ namespace Admin.Services
                 dbContext.PushNotifications.Add(new PushNotification
                 {
                     Description = Description,
-                    TimeStamp = DateTime.Now,
+                    TimeStamp = DateTime.UtcNow,
                     Title = Title
                 });
                 dbContext.SaveChanges();
