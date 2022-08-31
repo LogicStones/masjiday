@@ -15,12 +15,12 @@ namespace Admin.Models
         [Required(ErrorMessage = "Description is required.")]
         public string Description { get; set; }
 
-        //[Required(ErrorMessage = "Please select at least one option.")]
-        //public string AudianceTypeIds { get; set; }
+        [Required(ErrorMessage = "Please select at least one masjid.")]
+        public string MasajidIds { get; set; }
 
         //[Required(ErrorMessage = "Please select at least one option.")]
         //public string MethodTypeIds { get; set; }
-        //public List<Audiance> lstAudiance { get; set; }
+        public List<Audiance> lstAudiance { get; set; }
         //public List<NotificationMethod> lstNotificationMethod { get; set; }
     }
 

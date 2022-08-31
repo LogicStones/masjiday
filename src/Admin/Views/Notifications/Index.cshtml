@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Notifications History";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <!-- Vendor JS -->
+    <script src="~/Scripts/CommonMethod.js"></script>
+    <script src="~/Angular/NotificationsManager.js"></script>
+}
+
+<div class="box box-block bg-white" ng-controller="NotificationsManagerController" id="DivItems">
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="row">
+            <div class="col-xs-12">
+                @if (TempData["Message"].ToString().ToLower().Contains("failed"))
+                {
+                    <div class="alert alert-danger-outline alert-dismissible fade in" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <strong>@TempData["Message"].ToString()</strong>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-success-outline alert-dismissible fade in" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <strong>@TempData["Message"].ToString()</strong>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-xs-10 form-group">
+            <input type="text" placeholder="Search by title and description" class="form-control" ng-model="notification.Search" ng-change="SearchNotifications()" name="name" value="" />
+        </div>
+        <div class="col-xs-2">
+            <button ng-click="SendNew()" type="button" class="btn btn-black">Send New</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <table id="tblNotifications" class="table" style="width:100% !important;margin-top:-11px !important;">
+                <thead class="thead-inverse">
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        @*<th></th>*@
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>

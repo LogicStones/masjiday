@@ -84,6 +84,13 @@
           <Property Name="MasjidId" Type="int" Nullable="false" />
           <Property Name="DeviceToken" Type="varchar" MaxLength="1000" Nullable="false" />
         </EntityType>
+        <Function Name="FetchMasajidForAdmin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DisplayLength" Type="int" Mode="In" />
+          <Parameter Name="DisplayStart" Type="int" Mode="In" />
+          <Parameter Name="SortCol" Type="int" Mode="In" />
+          <Parameter Name="SortOrder" Type="nvarchar" Mode="In" />
+          <Parameter Name="Search" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="FetchNotificationsForAdmin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DisplayLength" Type="int" Mode="In" />
           <Parameter Name="DisplayStart" Type="int" Mode="In" />
@@ -166,6 +173,13 @@
           <EntitySet Name="AspNetUsers" EntityType="masjidayModel.AspNetUser" />
           <EntitySet Name="ReadNotifications" EntityType="masjidayModel.ReadNotification" />
           <EntitySet Name="Masajids" EntityType="masjidayModel.Masajid" />
+          <FunctionImport Name="FetchMasajidForAdmin" ReturnType="Collection(masjidayModel.FetchMasajidForAdmin_Result)">
+            <Parameter Name="DisplayLength" Mode="In" Type="Int32" />
+            <Parameter Name="DisplayStart" Mode="In" Type="Int32" />
+            <Parameter Name="SortCol" Mode="In" Type="Int32" />
+            <Parameter Name="SortOrder" Mode="In" Type="String" />
+            <Parameter Name="Search" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="FetchNotificationsForAdmin_Result">
           <Property Type="Int64" Name="RowNo" Nullable="true" />
@@ -209,6 +223,20 @@
           <Property Name="CityId" Type="Int32" Nullable="false" />
           <Property Name="OffSet" Type="Int32" Nullable="false" />
         </EntityType>
+        <ComplexType Name="FetchMasajidForAdmin_Result">
+          <Property Type="Int64" Name="RowNo" Nullable="true" />
+          <Property Type="Int32" Name="Total" Nullable="true" />
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
+          <Property Type="Int32" Name="Offset" Nullable="false" />
+          <Property Type="Int32" Name="CityId" Nullable="false" />
+          <Property Type="String" Name="Fajar" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="Zohar" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="Asar" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="Magrib" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="Isha" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="Juma" Nullable="true" MaxLength="5" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -313,6 +341,24 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="FetchMasajidForAdmin" FunctionName="masjidayModel.Store.FetchMasajidForAdmin">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="masjidayModel.FetchMasajidForAdmin_Result">
+                <ScalarProperty Name="RowNo" ColumnName="RowNo" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Offset" ColumnName="Offset" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="Fajar" ColumnName="Fajar" />
+                <ScalarProperty Name="Zohar" ColumnName="Zohar" />
+                <ScalarProperty Name="Asar" ColumnName="Asar" />
+                <ScalarProperty Name="Magrib" ColumnName="Magrib" />
+                <ScalarProperty Name="Isha" ColumnName="Isha" />
+                <ScalarProperty Name="Juma" ColumnName="Juma" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -1,0 +1,128 @@
+﻿@model Admin.Models.Notification
+
+@{
+    ViewBag.Title = "Notifications Center";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section stylesheet{
+
+}
+
+@section scripts{
+
+    <script type="text/javascript">
+
+            $("div#recipientMasajid .has-danger").hide();
+
+            var selectedMasajid = $('#hfMasajidIds').val().split(',');
+
+            $("input[type='checkbox'].recipient-masjid").each(function () {
+                if (jQuery.inArray($(this).val(), selectedMasajid) !== -1)
+                    $(this).prop('checked', true);
+            });
+
+            $("#btnSend").click(function (e) {
+
+                var masajid = [];
+
+                $(".recipient-masjid:checkbox:checked").each(function () {
+                    masajid.push($(this).val());
+                });
+
+                $("#hfMasajidIds").val(masajid.join(","));
+
+                if (!(masajid.length > 0)) {
+                    $("div#recipientMasajid .has-danger").show();
+                    e.preventDefault();
+                } else {
+                    
+                    $("div#recipientMasajid .has-danger").hide();
+                }
+            });
+
+        </script>
+
+}
+
+@using (Html.BeginForm("SendNotification", "Notifications", FormMethod.Post, new { id = "notificationsForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+
+    <div class="box bg-white box-block">
+
+        @if (TempData["Message"] != null)
+        {
+            <div class="row">
+                <div class="col-xs-12">
+                    @if (TempData["Message"].ToString().ToLower().Contains("failed"))
+                    {
+                        <div class="alert alert-danger-outline alert-dismissible fade in" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <strong>@TempData["Message"].ToString()</strong>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-success-outline alert-dismissible fade in" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <strong>@TempData["Message"].ToString()</strong>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        <div class="row">
+            <div class="col-xs-12 form-group">
+                <label>Title</label><br />
+                @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+                <span class="has-danger">
+                    @Html.ValidationMessageFor(m => m.Title, null, new { @class = "form-control-feedback" })
+                </span>
+            </div>
+            <div class="col-xs-12 form-group">
+                <label>Content</label><br />
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @rows = "10", @cols = "140" })
+                <span class="has-danger">
+                    @Html.ValidationMessageFor(m => m.Description, null, new { @class = "form-control-feedback" })
+                </span>
+            </div>
+            <div class="col-xs-12 form-group">
+                <label>Send To</label>
+                <div id="recipientMasajid" class="row m-b-1">
+                    @foreach (var m in Model.lstAudiance)
+                    {
+                        <div class="col-xs-12 col-sm-3">
+                            <label class="custom-control custom-checkbox">
+                                @Html.CheckBox(m.Name, new { @class = "custom-control-input recipient-masjid", value = m.Id })
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">@m.Name</span>
+                            </label>
+                        </div>
+                    }
+                    <div class="col-xs-12 form-group">
+                        <span class="has-danger">
+                            <span class="form-control-feedback">Please select at least one masjid.</span>
+                        </span>
+                    </div>
+                </div>
+                @Html.HiddenFor(m => m.MasajidIds, new { @id = "hfMasajidIds" })
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-xs-12">
+                <button type="submit" id="btnSend" class="btn btn-black pull-right">Send & Save</button>
+            </div>
+        </div>
+    </div>
+}

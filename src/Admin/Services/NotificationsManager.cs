@@ -19,7 +19,7 @@ namespace Admin.Services
 
         public static async Task SendPushNotifications(Notification model)
         {
-            var lstTokens = DevicesManager.GetAllDevicesToken();
+            var lstTokens = DevicesManager.GetAllDevicesToken(model.MasajidIds);
 
             await CloudNotifications.BroadCastFCM
                 (

@@ -1,0 +1,35 @@
+Message :The default FirebaseApp already exists.<br/>
+StackTrace :   at FirebaseAdmin.FirebaseApp.Create(AppOptions options, String name)
+   at Admin.Integrations.CloudNotifications.InitializeFirebaseApp() in D:\AppCrates_Nadeem\Masjiday\src\Admin\Integrations\FirebaseIntegration.cs:line 195
+Date :8/30/2022 9:55:46 AM
+
+-----------------------------------------------------------------------------
+
+Message :The default FirebaseApp already exists.<br/>
+StackTrace :   at FirebaseAdmin.FirebaseApp.Create(AppOptions options, String name)
+   at Admin.Integrations.CloudNotifications.InitializeFirebaseApp() in D:\AppCrates_Nadeem\Masjiday\src\Admin\Integrations\FirebaseIntegration.cs:line 195
+Date :8/30/2022 9:56:22 AM
+
+-----------------------------------------------------------------------------
+
+Message :The default FirebaseApp already exists.<br/>
+StackTrace :   at FirebaseAdmin.FirebaseApp.Create(AppOptions options, String name)
+   at Admin.Integrations.CloudNotifications.InitializeFirebaseApp() in D:\AppCrates_Nadeem\Masjiday\src\Admin\Integrations\FirebaseIntegration.cs:line 195
+Date :8/30/2022 9:56:44 AM
+
+-----------------------------------------------------------------------------
+
+Message :The default FirebaseApp already exists.<br/>
+StackTrace :   at FirebaseAdmin.FirebaseApp.Create(AppOptions options, String name)
+   at Admin.Integrations.CloudNotifications.InitializeFirebaseApp() in D:\AppCrates_Nadeem\Masjiday\src\Admin\Integrations\FirebaseIntegration.cs:line 195
+Date :8/30/2022 9:57:04 AM
+
+-----------------------------------------------------------------------------
+
+Message :The default FirebaseApp already exists.<br/>
+StackTrace :   at FirebaseAdmin.FirebaseApp.Create(AppOptions options, String name)
+   at Admin.Integrations.CloudNotifications.InitializeFirebaseApp() in D:\AppCrates_Nadeem\Masjiday\src\Admin\Integrations\FirebaseIntegration.cs:line 195
+Date :8/30/2022 9:57:37 AM
+
+-----------------------------------------------------------------------------
+

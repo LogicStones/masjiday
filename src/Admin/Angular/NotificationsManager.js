@@ -10,6 +10,13 @@
         BindNotificationsHistoryGrid();
     };
 
+    $scope.SendNew = function () {
+
+        window.location.href = "/Notifications/SendNotification";
+        //var OrderID = $(e).parent().find("#hdfNotificationId").val();
+        //angular.element(document.getElementById('DivItems')).scope().ViewNotificationDetails(OrderID);
+    };
+
     BindNotificationsHistoryGrid();
 
     //$scope.ViewNotificationDetails = function (OrderID) {
@@ -30,7 +37,7 @@
         //$scope.orderSearch.CompanyID = $("#hdfModelUserID").val();
 
         $("#tblNotifications").advancedDataTable({
-            url: "/Home/FetchNotifications",
+            url: "/Notifications/FetchNotifications",
             postData: $scope.notification,
             bindingData: [
                 {
@@ -53,7 +60,3 @@
 
 });
 
-//function ViewNotificationDetails(e) {
-//    var OrderID = $(e).parent().find("#hdfNotificationId").val();
-//    angular.element(document.getElementById('DivItems')).scope().ViewNotificationDetails(OrderID);
-//}

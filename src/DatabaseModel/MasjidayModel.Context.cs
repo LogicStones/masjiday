@@ -60,5 +60,30 @@ namespace DatabaseModel
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FetchNotificationsForAdmin_Result>("FetchNotificationsForAdmin", displayLengthParameter, displayStartParameter, sortColParameter, sortOrderParameter, searchParameter);
         }
+    
+        public virtual ObjectResult<FetchMasajidForAdmin_Result> FetchMasajidForAdmin(Nullable<int> displayLength, Nullable<int> displayStart, Nullable<int> sortCol, string sortOrder, string search)
+        {
+            var displayLengthParameter = displayLength.HasValue ?
+                new ObjectParameter("DisplayLength", displayLength) :
+                new ObjectParameter("DisplayLength", typeof(int));
+    
+            var displayStartParameter = displayStart.HasValue ?
+                new ObjectParameter("DisplayStart", displayStart) :
+                new ObjectParameter("DisplayStart", typeof(int));
+    
+            var sortColParameter = sortCol.HasValue ?
+                new ObjectParameter("SortCol", sortCol) :
+                new ObjectParameter("SortCol", typeof(int));
+    
+            var sortOrderParameter = sortOrder != null ?
+                new ObjectParameter("SortOrder", sortOrder) :
+                new ObjectParameter("SortOrder", typeof(string));
+    
+            var searchParameter = search != null ?
+                new ObjectParameter("Search", search) :
+                new ObjectParameter("Search", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FetchMasajidForAdmin_Result>("FetchMasajidForAdmin", displayLengthParameter, displayStartParameter, sortColParameter, sortOrderParameter, searchParameter);
+        }
     }
 }

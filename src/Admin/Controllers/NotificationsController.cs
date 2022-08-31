@@ -11,11 +11,24 @@ using System.Web.Mvc;
 namespace Admin.Controllers
 {
     [Authorize]
-    public class HomeController : Controller
+    public class NotificationsController : Controller
     {
         public ActionResult Index()
         {
-            return View(new Notification());
+            return View();
+        }
+
+        public JsonResult FetchNotifications()
+        {
+            return Json(NotificationsManager.FetchAllNotifications(Request.FetchPaging()), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult SendNotification()
+        {
+            return View(new Notification
+            {
+                lstAudiance = MasajidManager.GetAllMasjid()
+            });
         }
 
         [HttpPost]
@@ -26,16 +39,6 @@ namespace Admin.Controllers
             TempData["Message"] = "Notification sent successfully.";
 
             return RedirectToAction("Index");
-        }
-
-        public ActionResult History()
-        {
-            return View(new Notification());
-        }
-        
-        public JsonResult FetchNotifications()
-        {
-            return Json(NotificationsManager.FetchAllNotifications(Request.FetchPaging()), JsonRequestBehavior.AllowGet);
         }
 
         //[HttpPost]

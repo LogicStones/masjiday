@@ -8,11 +8,12 @@ namespace Admin.Services
 {
     public class DevicesManager
     {
-        public static List<string> GetAllDevicesToken() 
+        public static List<string> GetAllDevicesToken(string masajidIds) 
         {
             using (var dbContext = new masjidayEntities())
             {
-                return dbContext.RegisteredDevices.Select(u => u.DeviceToken).ToList();
+                var lstMasajid = masajidIds.Split(',').ToList();
+                return dbContext.RegisteredDevices.Where(rd => lstMasajid.Contains(rd.MasjidId.ToString())).Select(u => u.DeviceToken).ToList();
             }
         }
     }

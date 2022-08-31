@@ -40,14 +40,26 @@
         <!-- Sidebar -->
         <div class="site-sidebar-overlay"></div>
         <div class="site-sidebar">
-            <a class="logo" href="/Home/Index">
+            <a class="logo" href="/Masajid/Index">
                 <img src="~/img/logo/logo.png" style="height:60px" />
                 @*<img width="150px" src="@(ConfigurationManager.AppSettings["ResellerUrl"] + Profiler.CompanyLogo.Replace("~",""))" />*@
             </a>
             <div class="custom-scroll custom-scroll-light">
                 <ul class="sidebar-menu">
                     <li class="menu-title m-t-0-5"></li>
-                    <li class="with-sub">
+                    <li>
+                        <a href="/Masajid/Index" class="waves-effect waves-light">
+                            <span class="s-icon"><i class="fa fa-building"></i></span>
+                            <span class="s-text">Masajid</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Notifications/Index" class="waves-effect waves-light">
+                            <span class="s-icon"><i class="fa fa-bell"></i></span>
+                            <span class="s-text">Notifications</span>
+                        </a>
+                    </li>
+                    @*<li class="with-sub">
                         <a href="#" class="waves-effect waves-light">
                             <span class="s-caret"><i class="fa fa-angle-down"></i></span>
                             <span class="s-icon"><i class="fa fa-bell"></i></span>
@@ -55,17 +67,17 @@
                         </a>
                         <ul>
                             <li>
-                                <a href="/Home/Index" class="waves-effect waves-light">
+                                <a href="/Notifications/SendNotification" class="waves-effect waves-light">
                                     <span class="s-text">Send New</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="/Home/History" class="waves-effect waves-light">
+                                <a href="/Notifications/Index" class="waves-effect waves-light">
                                     <span class="s-text">History</span>
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li>*@
                 </ul>
             </div>
         </div>
@@ -117,7 +129,7 @@
                     <ol class="breadcrumb no-bg m-b-1">
                         @if (ViewContext.RouteData.Values["controller"].ToString() != "Home")
                         {
-                            <li class="breadcrumb-item">@Html.ActionLink("Home", "Index", "Home")</li>
+                            @*<li class="breadcrumb-item">@Html.ActionLink("Home", "Index", "Home")</li>*@
                             if (ViewContext.RouteData.Values["controller"].ToString() != "Home")
                             {
                                 <li class="breadcrumb-item">@Html.ActionLink(string.Concat(ViewContext.RouteData.Values["controller"].ToString().Select(x => Char.IsUpper(x) ? " " + x : x.ToString())).TrimStart(' '), "Index", ViewContext.RouteData.Values["controller"].ToString())</li>

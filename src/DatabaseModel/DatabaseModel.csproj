@@ -64,6 +64,9 @@
     <Compile Include="Country.cs">
       <DependentUpon>MasjidayModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="FetchMasajidForAdmin_Result.cs">
+      <DependentUpon>MasjidayModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="FetchNotificationsForAdmin_Result.cs">
       <DependentUpon>MasjidayModel.tt</DependentUpon>
     </Compile>

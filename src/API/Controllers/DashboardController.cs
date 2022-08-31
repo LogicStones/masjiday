@@ -311,6 +311,8 @@ namespace API.Controllers
             try
             {
                 var lstMasajid = dbContext.Masajids.ToList();
+                var dbPrayerTimings = dbContext.PrayerTimings.ToList();
+                var dbRegisteredDevices = dbContext.RegisteredDevices.ToList();
 
                 foreach (var m in lstMasajid)
                 {
@@ -318,39 +320,36 @@ namespace API.Controllers
                     int minutesDifference = int.Parse(ConfigurationManager.AppSettings["PreNotificationInterval"].ToString()); //15;
                     var currentTime = DateTime.UtcNow.AddMinutes(m.OffSet).TimeOfDay;
 
-                    //var lstPrayerTimings = dbContext.PrayerTimings.ToList();
-                    //var lstRegisteredDevices = dbContext.RegisteredDevices.ToList();
-
-                    var lstPrayerTimings = dbContext.PrayerTimings.Where(pt => pt.MasjidId == m.Id).ToList();
-                    var lstRegisteredDevices = dbContext.RegisteredDevices.Where(rd => rd.MasjidId == m.Id).ToList();
+                    //var lstPrayerTimings = dbContext.PrayerTimings.Where(pt => pt.MasjidId == m.Id).ToList();
+                    //var lstRegisteredDevices = dbContext.RegisteredDevices.Where(rd => rd.MasjidId == m.Id).ToList();
+                    var lstRegisteredDevices = dbRegisteredDevices.Where(rd => rd.MasjidId == m.Id).ToList();
 
                     if (lstRegisteredDevices.Any())
                     {
-                        foreach (var t in lstPrayerTimings)
-                        {
-                            if (t.Fajar.Subtract(currentTime).TotalMinutes > 0 && t.Fajar.Subtract(currentTime).TotalMinutes <= minutesDifference)
+                        //foreach (var t in lstPrayerTimings)
+                        //{
+                        var prayerTiming = dbPrayerTimings.Where(pt => pt.MasjidId == m.Id).FirstOrDefault();
+
+                            if (prayerTiming.Fajar.Subtract(currentTime).TotalMinutes > 0 && prayerTiming.Fajar.Subtract(currentTime).TotalMinutes <= minutesDifference)
                                 prayerName = "Fajar";
-                            else if ((t.Juma.Subtract(currentTime).TotalMinutes > 0 && t.Juma.Subtract(currentTime).TotalMinutes <= minutesDifference && DateTime.Now.DayOfWeek == DayOfWeek.Friday) ||
-                                (t.Zohar.Subtract(currentTime).TotalMinutes > 0 && t.Zohar.Subtract(currentTime).TotalMinutes <= minutesDifference))
+                            else if ((prayerTiming.Juma.Subtract(currentTime).TotalMinutes > 0 && prayerTiming.Juma.Subtract(currentTime).TotalMinutes <= minutesDifference && DateTime.Now.DayOfWeek == DayOfWeek.Friday) ||
+                                (prayerTiming.Zohar.Subtract(currentTime).TotalMinutes > 0 && prayerTiming.Zohar.Subtract(currentTime).TotalMinutes <= minutesDifference))
                                 prayerName = DateTime.Now.DayOfWeek == DayOfWeek.Friday ? "Juma" : "Zohar";
-                            else if (t.Asar.Subtract(currentTime).TotalMinutes > 0 && t.Asar.Subtract(currentTime).TotalMinutes <= minutesDifference)
+                            else if (prayerTiming.Asar.Subtract(currentTime).TotalMinutes > 0 && prayerTiming.Asar.Subtract(currentTime).TotalMinutes <= minutesDifference)
                                 prayerName = "Asar";
-                            else if (t.Magrib.Subtract(currentTime).TotalMinutes > 0 && t.Magrib.Subtract(currentTime).TotalMinutes <= minutesDifference)
+                            else if (prayerTiming.Magrib.Subtract(currentTime).TotalMinutes > 0 && prayerTiming.Magrib.Subtract(currentTime).TotalMinutes <= minutesDifference)
                                 prayerName = "Magrib";
-                            else if (t.Isha.Subtract(currentTime).TotalMinutes > 0 && t.Isha.Subtract(currentTime).TotalMinutes <= minutesDifference)
+                            else if (prayerTiming.Isha.Subtract(currentTime).TotalMinutes > 0 && prayerTiming.Isha.Subtract(currentTime).TotalMinutes <= minutesDifference)
                                 prayerName = "Isha";
 
                             if (!string.IsNullOrEmpty(prayerName))
                             {
-                                //var lstDeviceTokens = lstRegisteredDevices.Where(rd => rd.MasjidId == t.MasjidId).Select(rd => rd.DeviceToken).ToList();
                                 var lstDeviceTokens = lstRegisteredDevices.Select(rd => rd.DeviceToken).ToList();
 
                                 if (lstDeviceTokens.Any())
                                     await NotificationsManager.SendPrayerNotifications(m.Name, prayerName + " Prayer after 15 minutes.", lstDeviceTokens);
-
-                                //await NotificationsManager.SendPrayerNotifications(prayerName + "Prayer", prayerName + "Prayer after 15 minutes.", lstDeviceTokens);
                             }
-                        }
+                        //}
                     }
                 }
                 response.Error = false;

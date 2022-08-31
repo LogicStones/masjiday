@@ -1,0 +1,48 @@
+Message :Object reference not set to an instance of an object.<br/>
+StackTrace :   at Admin.Services.NotificationsManager.FetchAllNotifications(Paging paging) in D:\AppCrates_Nadeem\Masjiday\src\Admin\Services\MasajidManager.cs:line 48
+Date :8/29/2022 4:45:05 PM
+
+-----------------------------------------------------------------------------
+
+Message :Object reference not set to an instance of an object.<br/>
+StackTrace :   at Admin.Services.MasajidManager.FetchAllMasajid(Paging paging)
+Date :8/29/2022 4:46:23 PM
+
+-----------------------------------------------------------------------------
+
+Message :Object reference not set to an instance of an object.<br/>
+StackTrace :   at Admin.Services.MasajidManager.FetchAllMasajid(Paging paging)
+Date :8/29/2022 4:50:00 PM
+
+-----------------------------------------------------------------------------
+
+Message :Object reference not set to an instance of an object.<br/>
+StackTrace :   at Admin.Services.MasajidManager.FetchAllMasajid(Paging paging) in D:\AppCrates_Nadeem\Masjiday\src\Admin\Services\NotificationsManager.cs:line 31
+Date :8/29/2022 5:00:41 PM
+
+-----------------------------------------------------------------------------
+
+Message :Object reference not set to an instance of an object.<br/>
+StackTrace :   at Admin.Services.MasajidManager.FetchAllMasajid(Paging paging) in D:\AppCrates_Nadeem\Masjiday\src\Admin\Services\NotificationsManager.cs:line 31
+Date :8/29/2022 5:06:05 PM
+
+-----------------------------------------------------------------------------
+
+Message :Object reference not set to an instance of an object.<br/>
+StackTrace :   at Admin.Services.MasajidManager.FetchAllMasajid(Paging paging) in D:\AppCrates_Nadeem\Masjiday\src\Admin\Services\NotificationsManager.cs:line 31
+Date :8/29/2022 5:08:40 PM
+
+-----------------------------------------------------------------------------
+
+Message :Object reference not set to an instance of an object.<br/>
+StackTrace :   at Admin.Services.MasajidManager.FetchAllMasajid(Paging paging) in D:\AppCrates_Nadeem\Masjiday\src\Admin\Services\NotificationsManager.cs:line 31
+Date :8/29/2022 5:12:15 PM
+
+-----------------------------------------------------------------------------
+
+Message :Object reference not set to an instance of an object.<br/>
+StackTrace :   at Admin.Services.MasajidManager.FetchAllMasajid(Paging paging) in D:\AppCrates_Nadeem\Masjiday\src\Admin\Services\NotificationsManager.cs:line 31
+Date :8/29/2022 5:14:09 PM
+
+-----------------------------------------------------------------------------
+

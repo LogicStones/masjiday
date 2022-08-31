@@ -170,6 +170,9 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="AppSettingsSecrets.config" />
+    <Content Include="masjiday-firebase-adminsdk-service-account.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

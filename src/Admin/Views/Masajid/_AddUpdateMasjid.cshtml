@@ -1,0 +1,105 @@
+﻿@model Admin.Models.Masjid
+
+@using (Html.BeginForm("AddUpdateMasjid", "Masajid", FormMethod.Post, new { id = "masjidForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+                <label for="txtName">Masjid Name</label>
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                <span class="has-danger">
+                    @Html.ValidationMessageFor(m => m.Name, null, new { @class = "form-control-feedback" })
+                </span>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+                <label for="txtEmail">OffSet</label>
+                @Html.TextBoxFor(m => m.OffSet, new { @class = "form-control", @type = "number", placeholder = "Example: For UTC-4 enter -240, For UTC+5 enter 300" })
+                <span class="has-danger">
+                    @Html.ValidationMessageFor(m => m.OffSet, null, new { @class = "form-control-feedback" })
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+                <label for="txtName">Fajar</label>
+                @Html.TextBoxFor(m => m.Fajar, new { @class = "form-control", @type="time" })
+                <span class="has-danger">
+                    @Html.ValidationMessageFor(m => m.Fajar, null, new { @class = "form-control-feedback" })
+                </span>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+                <label for="txtEmail">Zohar</label>
+                @Html.TextBoxFor(m => m.Zohar, new { @class = "form-control", @type = "time" })
+                <span class="has-danger">
+                    @Html.ValidationMessageFor(m => m.Zohar, null, new { @class = "form-control-feedback" })
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+                <label for="txtName">Asar</label>
+                @Html.TextBoxFor(m => m.Asar, new { @class = "form-control", @type = "time" })
+                <span class="has-danger">
+                    @Html.ValidationMessageFor(m => m.Asar, null, new { @class = "form-control-feedback" })
+                </span>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+                <label for="txtEmail">Magrib</label>
+                @Html.TextBoxFor(m => m.Magrib, new { @class = "form-control", @type = "time" })
+                <span class="has-danger">
+                    @Html.ValidationMessageFor(m => m.Magrib, null, new { @class = "form-control-feedback" })
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+                <label for="txtName">Isha</label>
+                @Html.TextBoxFor(m => m.Isha, new { @class = "form-control", @type = "time" })
+                <span class="has-danger">
+                    @Html.ValidationMessageFor(m => m.Isha, null, new { @class = "form-control-feedback" })
+                </span>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+                <label for="txtEmail">Juma</label>
+                @Html.TextBoxFor(m => m.Juma, new { @class = "form-control", @type = "time" })
+                <span class="has-danger">
+                    @Html.ValidationMessageFor(m => m.Juma, null, new { @class = "form-control-feedback" })
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 pull-right">
+            @if (Model.Id == 0)
+            {
+                <input id="btnSaveMasjid" type="submit" name="btnSubmit" class="btn btn-warning pull-right btnSubmit" value="Save" />
+            }
+            else
+            {
+                @Html.HiddenFor(m => m.Id)
+                <input id="btnUpdateMasjid" type="submit" name="btnSubmit" class="btn btn-warning pull-right btnSubmit" value="Update" />
+            }
+            <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+}
