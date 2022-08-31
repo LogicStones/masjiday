@@ -20,20 +20,21 @@ namespace Admin.Services
         public static async Task SendPushNotifications(Notification model)
         {
             var lstTokens = DevicesManager.GetAllDevicesToken(model.MasajidIds);
-
-            await CloudNotifications.BroadCastFCM
-                (
-                    model.Description,
-                    ConfigurationManager.AppSettings["LogoURL"],
-                    model.Title,
-                    new Dictionary<string, string>
-                            {
+            if (lstTokens.Any())
+            {
+                await CloudNotifications.BroadCastFCM
+                    (
+                        model.Description,
+                        ConfigurationManager.AppSettings["LogoURL"],
+                        model.Title,
+                        new Dictionary<string, string>
+                                {
                                 { "MessageKey", "admin_new_notification" }
-                            },
-                    lstTokens
-                );
-
-            SaveNotification(model.Title, model.Description);
+                                },
+                        lstTokens
+                    );
+            }
+            SaveMasjidNotification(SaveNotification(model.Title, model.Description), model.MasajidIds);
         }
 
         public static CallBackData FetchAllNotifications(Paging paging)
@@ -63,16 +64,35 @@ namespace Admin.Services
             return callBackData;
         }
 
-        public static void SaveNotification(string Title, string Description)
+        public static int SaveNotification(string Title, string Description)
         {
             using (var dbContext = new masjidayEntities())
             {
-                dbContext.PushNotifications.Add(new PushNotification
+                var notification = new PushNotification
                 {
                     Description = Description,
                     TimeStamp = DateTime.UtcNow,
                     Title = Title
-                });
+                };
+                dbContext.PushNotifications.Add(notification);
+                dbContext.SaveChanges();
+                return notification.Id;
+            }
+        }
+
+        public static void SaveMasjidNotification(int NotificationId, string MasajidIds)
+        {
+            using (var dbContext = new masjidayEntities())
+            {
+                var masajid = MasajidIds.Split(',').ToList();
+                foreach (var m in masajid)
+                {
+                    dbContext.MasjidNotifications.Add(new MasjidNotification
+                    {
+                        MasjidId = int.Parse(m),
+                        NotificationId = NotificationId
+                    });
+                }
                 dbContext.SaveChanges();
             }
         }

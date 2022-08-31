@@ -46,6 +46,14 @@
           <Property Name="CityId" Type="int" Nullable="false" />
           <Property Name="OffSet" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="MasjidNotifications">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NotificationId" Type="int" Nullable="false" />
+          <Property Name="MasjidId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="PrayerTimings">
           <Key>
             <PropertyRef Name="Id" />
@@ -103,6 +111,7 @@
           <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Masajid" EntityType="Self.Masajid" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MasjidNotifications" EntityType="Self.MasjidNotifications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PrayerTimings" EntityType="Self.PrayerTimings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PushNotifications" EntityType="Self.PushNotifications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReadNotifications" EntityType="Self.ReadNotifications" Schema="dbo" store:Type="Tables" />
@@ -180,6 +189,7 @@
             <Parameter Name="SortOrder" Mode="In" Type="String" />
             <Parameter Name="Search" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="MasjidNotifications" EntityType="masjidayModel.MasjidNotification" />
         </EntityContainer>
         <ComplexType Name="FetchNotificationsForAdmin_Result">
           <Property Type="Int64" Name="RowNo" Nullable="true" />
@@ -237,6 +247,14 @@
           <Property Type="String" Name="Isha" Nullable="true" MaxLength="5" />
           <Property Type="String" Name="Juma" Nullable="true" MaxLength="5" />
         </ComplexType>
+        <EntityType Name="MasjidNotification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NotificationId" Type="Int32" Nullable="false" />
+          <Property Name="MasjidId" Type="Int32" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -359,6 +377,15 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="MasjidNotifications">
+            <EntityTypeMapping TypeName="masjidayModel.MasjidNotification">
+              <MappingFragment StoreEntitySet="MasjidNotifications">
+                <ScalarProperty Name="MasjidId" ColumnName="MasjidId" />
+                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

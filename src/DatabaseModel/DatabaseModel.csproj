@@ -88,6 +88,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MasjidayModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="MasjidNotification.cs">
+      <DependentUpon>MasjidayModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="PrayerTiming.cs">
       <DependentUpon>MasjidayModel.tt</DependentUpon>
     </Compile>

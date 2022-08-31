@@ -220,10 +220,24 @@ namespace API.Controllers
                     return Request.CreateResponse(HttpStatusCode.OK, response);
                 }
 
-                var totalNotifications = dbContext.PushNotifications.Count();
-                var readNotifications = dbContext.ReadNotifications.Where(rn => rn.DeviceId.Equals(DeviceId)).Count();
+                var masjidId = dbContext.RegisteredDevices.Where(rd => rd.Id.Equals(DeviceId)).FirstOrDefault().MasjidId;
+                var masjid = dbContext.Masajids.Where(m => m.Id == masjidId).FirstOrDefault();
+                var totalNotifications = dbContext.MasjidNotifications.Where(mn => mn.MasjidId == masjidId).Count();
 
-                var lstNotifications = dbContext.PushNotifications.OrderByDescending(n => n.TimeStamp).Skip(PageNo * Length).Take(Length).ToList();
+                var readNotifications = (from rn in dbContext.ReadNotifications
+                              join mn in dbContext.MasjidNotifications on rn.NotificationId equals mn.NotificationId
+                              where rn.DeviceId == DeviceId && mn.MasjidId == masjidId
+                              select rn).Count();
+
+                //var readNotifications = dbContext.ReadNotifications.Where(rn => rn.DeviceId.Equals(DeviceId)).Count();
+
+                //var lstNotifications = dbContext.PushNotifications.OrderByDescending(n => n.TimeStamp).Skip(PageNo * Length).Take(Length).ToList();
+
+                var lstNotifications = (from pn in dbContext.PushNotifications
+                                        join mn in dbContext.MasjidNotifications on pn.Id equals mn.NotificationId
+                                        where mn.MasjidId == masjidId
+                                        orderby pn.TimeStamp descending
+                                        select pn).Skip(PageNo * Length).Take(Length).ToList();
 
                 var lstResponse = new List<NotificationDetails>();
 
@@ -234,7 +248,7 @@ namespace API.Controllers
                         Id = item.Id,
                         Description = item.Description,
                         Title = item.Title,
-                        TimeStamp = item.TimeStamp.ToString("dd/MM/yyyy HH:mm")
+                        TimeStamp = item.TimeStamp.AddMinutes(masjid.OffSet).ToString("dd/MM/yyyy HH:mm")
                     });
                 }
 

@@ -13,6 +13,7 @@
         <EntityTypeShape EntityType="masjidayModel.AspNetUser" Width="1.5" PointX="7.125" PointY="3.125" />
         <EntityTypeShape EntityType="masjidayModel.ReadNotification" Width="1.5" PointX="7.375" PointY="0.75" />
         <EntityTypeShape EntityType="masjidayModel.Masajid" Width="1.5" PointX="0.625" PointY="3.75" />
+        <EntityTypeShape EntityType="masjidayModel.MasjidNotification" Width="1.5" PointX="0.75" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
