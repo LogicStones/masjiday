@@ -158,6 +158,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="ConnectionStrings.config" />
+    <Content Include="img\Ads\GemsTelecom.jpeg" />
     <Content Include="img\logo\logo.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

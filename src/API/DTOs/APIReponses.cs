@@ -5,8 +5,14 @@ using System.Web;
 
 namespace API.DTOs
 {
-    public class PrayerTimingModel
+    public class ImageAndRedirectUrl
     {
+        public string ImageUrl { get; set; }
+        public string RedirectUrl { get; set; }
+    }
+
+    public class PrayerTimingModel : ImageAndRedirectUrl
+    { 
         public int MasjidId { get; set; }
         public string Fajar { get; set; }
         public string Zohar { get; set; }

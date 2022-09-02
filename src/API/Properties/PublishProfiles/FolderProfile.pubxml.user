@@ -5,20 +5,20 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\Users\Ahmad Ahsan\Desktop\Publish\Masjiday\API</_PublishTargetUrl>
-    <History>True|2022-08-31T17:18:15.5865709Z;True|2022-08-30T16:00:28.7571079+05:00;True|2022-08-30T15:54:10.1412737+05:00;True|2022-08-30T15:22:45.5850848+05:00;True|2022-08-30T15:18:05.3857151+05:00;True|2022-08-23T20:35:57.0439689+05:00;True|2022-08-11T19:35:58.9073495+05:00;True|2022-08-10T17:23:58.6563487+05:00;True|2022-08-01T20:36:00.9902775+05:00;True|2022-08-01T20:15:56.0155936+05:00;True|2022-07-20T14:11:54.6475328+05:00;True|2022-07-18T19:24:59.7030964+05:00;True|2022-07-06T13:52:01.3863500+05:00;True|2022-07-04T12:39:07.4918375+05:00;True|2022-07-04T12:27:53.9590638+05:00;</History>
+    <History>True|2022-09-02T13:30:59.8152839Z;True|2022-08-31T22:18:15.5865709+05:00;True|2022-08-30T16:00:28.7571079+05:00;True|2022-08-30T15:54:10.1412737+05:00;True|2022-08-30T15:22:45.5850848+05:00;True|2022-08-30T15:18:05.3857151+05:00;True|2022-08-23T20:35:57.0439689+05:00;True|2022-08-11T19:35:58.9073495+05:00;True|2022-08-10T17:23:58.6563487+05:00;True|2022-08-01T20:36:00.9902775+05:00;True|2022-08-01T20:15:56.0155936+05:00;True|2022-07-20T14:11:54.6475328+05:00;True|2022-07-18T19:24:59.7030964+05:00;True|2022-07-06T13:52:01.3863500+05:00;True|2022-07-04T12:39:07.4918375+05:00;True|2022-07-04T12:27:53.9590638+05:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="AppSettingsSecrets.config">
       <publishTime>08/11/2022 19:29:52</publishTime>
     </File>
     <File Include="bin/Admin.dll">
-      <publishTime>08/31/2022 22:18:11</publishTime>
+      <publishTime>09/02/2022 18:30:52</publishTime>
     </File>
     <File Include="bin/Admin.dll.config">
       <publishTime>07/20/2022 13:05:42</publishTime>
     </File>
     <File Include="bin/Admin.pdb">
-      <publishTime>08/31/2022 22:18:11</publishTime>
+      <publishTime>09/02/2022 18:30:52</publishTime>
     </File>
     <File Include="bin/Antlr3.Runtime.dll">
       <publishTime>09/10/2013 21:29:20</publishTime>
@@ -27,10 +27,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/10/2013 21:29:20</publishTime>
     </File>
     <File Include="bin/API.dll">
-      <publishTime>08/31/2022 22:18:13</publishTime>
+      <publishTime>09/02/2022 18:30:56</publishTime>
     </File>
     <File Include="bin/API.pdb">
-      <publishTime>08/31/2022 22:18:13</publishTime>
+      <publishTime>09/02/2022 18:30:56</publishTime>
     </File>
     <File Include="bin/DatabaseModel.dll">
       <publishTime>08/31/2022 22:16:27</publishTime>
@@ -328,6 +328,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     </File>
     <File Include="Global.asax">
       <publishTime>07/02/2022 12:58:25</publishTime>
+    </File>
+    <File Include="img/Ads/GemsTelecom.jpeg">
+      <publishTime>09/02/2022 18:28:01</publishTime>
     </File>
     <File Include="img/logo/logo.png">
       <publishTime>07/07/2022 16:20:48</publishTime>

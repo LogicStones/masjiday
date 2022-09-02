@@ -193,7 +193,10 @@ namespace API.Controllers
                     Asar = masjidTiming.Asar.Hours.ToString("00") + ":" + masjidTiming.Asar.Minutes.ToString("00"),
                     Magrib = masjidTiming.Magrib.Hours.ToString("00") + ":" + masjidTiming.Magrib.Minutes.ToString("00"),
                     Isha = masjidTiming.Isha.Hours.ToString("00") + ":" + masjidTiming.Isha.Minutes.ToString("00"),
-                    Juma = masjidTiming.Juma.Hours.ToString("00") + ":" + masjidTiming.Juma.Minutes.ToString("00")
+                    Juma = masjidTiming.Juma.Hours.ToString("00") + ":" + masjidTiming.Juma.Minutes.ToString("00"),
+
+                    ImageUrl = "/img/Ads/GemsTelecom.jpeg",
+                    RedirectUrl = "https://www.gemstelecom.com/"
                 };
                 response.Message = AppMessages.msgSuccess;
                 return Request.CreateResponse(HttpStatusCode.OK, response);
