@@ -62,18 +62,20 @@
         });
     };
 
-    //$scope.ViewNotificationDetails = function (OrderID) {
-    //    $http({
-    //        method: "post",
-    //        url: "/Home/ViewNotification",
-    //        data: { OrderID: OrderID },
-    //        dataType: "json"
-    //    }).then(function (msg) {
-    //        angular.element("#modalLabel").text("Order Details");
-    //        angular.element("#modalBody").html(msg.data);
-    //        angular.element("#detailsModal").modal("show");
-    //    });
-    //};
+    $scope.UploadCSV = function (masjidId) {
+        $http({
+            method: "get",
+            url: "/Masajid/UploadPrayerTimings?masjidId=" + masjidId,
+            //data: { masjidId: masjidId },
+            data: {},
+            dataType: "json"
+        }).then(function (msg) {
+            angular.element("#modalLabel").text("Upload Prayer Timings");
+            angular.element("#modalBody").html(msg.data);
+            $.validator.unobtrusive.parse("#prayerTimingForm");
+            angular.element("#detailsModal").modal("show");
+        });
+    };
     
     function BindMasajidGrid() {
 
@@ -98,7 +100,7 @@
                 { "data": "Juma" },
                 {
                     "render": function (data, type, row) {
-                        return "<input type='hidden' id='hdfMasjidId' value='" + row.Id + "' /> <a href='javascript: void(0);' title='Edit' onclick='EditMasjid(this)'>Edit</a>";
+                        return "<input type='hidden' id='hdfMasjidId' value='" + row.Id + "' /> <a href='javascript: void(0);' title='Upload CSV to Update Prayer Timing' onclick='UploadCSV(this)'>Upload CSV</a> | <a href='javascript: void(0);' title='Edit' onclick='EditMasjid(this)'>Edit</a>";
                     }
                 }
             ]
@@ -112,7 +114,7 @@ function EditMasjid(e) {
     angular.element(document.getElementById('DivItems')).scope().EditMasjid(masjidId);
 }
 
-//function ViewNotificationDetails(e) {
-//    var OrderID = $(e).parent().find("#hdfNotificationId").val();
-//    angular.element(document.getElementById('DivItems')).scope().ViewNotificationDetails(OrderID);
-//}
+function UploadCSV(e) {
+    var masjidId = $(e).parent().find("#hdfMasjidId").val();
+    angular.element(document.getElementById('DivItems')).scope().UploadCSV(masjidId);
+}

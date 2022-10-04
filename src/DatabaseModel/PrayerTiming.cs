@@ -22,5 +22,6 @@ namespace DatabaseModel
         public System.TimeSpan Magrib { get; set; }
         public System.TimeSpan Isha { get; set; }
         public System.TimeSpan Juma { get; set; }
+        public System.DateTime Date { get; set; }
     }
 }

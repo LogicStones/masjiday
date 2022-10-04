@@ -7,6 +7,20 @@
     <!-- Vendor JS -->
     <script src="~/Scripts/CommonMethod.js"></script>
     <script src="~/Angular/MasajidManager.js"></script>
+
+    <script type="text/javascript">
+        //Bind event to hide/show file upload alert
+        $(document).on("change", "input:file", function (e) {
+            var parent = $(this).parents(".file-upload-control").first();
+            var fileName = $(this).val().split("\\")[$(this).val().split("\\").length - 1];
+
+            parent.find("span.has-success > span.form-control-feedback").text(fileName);
+            parent.find("span.has-success > span.form-control-feedback").show();
+            //parent.find("span.has-danger > span.form-control-feedback").hide();
+            //parent.find("input[type=hidden]").val(fileName);
+
+        });
+    </script>
 }
 
 <div class="box box-block bg-white" ng-controller="MasajidManagerController" id="DivItems">
@@ -80,8 +94,8 @@
 
             </div>
             @*<div class="modal-footer">
-                <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
-            </div>*@
+                    <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+                </div>*@
         </div>
     </div>
 </div>

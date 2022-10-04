@@ -1,14 +1,12 @@
 ﻿using Admin.Datatable;
-using Admin.Integrations;
 using Admin.Models;
 using Admin.Utilities;
 using DatabaseModel;
+using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
+using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
 
 namespace Admin.Services
 {
@@ -24,7 +22,7 @@ namespace Admin.Services
                 using (var dbContext = new masjidayEntities())
                 {
                     var masajid = dbContext.FetchMasajidForAdmin(paging.DisplayLength, paging.DisplayStart, paging.SortColumn, paging.SortOrder, company.Search).ToList();
-                    
+
                     //orders.Select(o => { o.TotalAmount = (o.TotalActualAmount + o.TotalExtraAmount).ToString("0.00"); return o; }).ToList();
 
                     callBackData = masajid.ToDataTable(paging);
@@ -53,16 +51,26 @@ namespace Admin.Services
                 dbContext.Masajids.Add(masjid);
                 dbContext.SaveChanges();
 
-                dbContext.PrayerTimings.Add(new PrayerTiming
+                var startDate = DateTime.UtcNow.Date;
+                var endDate = startDate.AddYears(1);
+
+                while (startDate < endDate)
                 {
-                    MasjidId = masjid.Id,
-                    Isha = model.Isha,
-                    Asar = model.Asar,
-                    Fajar = model.Fajar,
-                    Juma = model.Juma,
-                    Magrib = model.Magrib,
-                    Zohar = model.Zohar
-                });
+                    dbContext.PrayerTimings.Add(new PrayerTiming
+                    {
+                        MasjidId = masjid.Id,
+                        Isha = model.Isha,
+                        Asar = model.Asar,
+                        Fajar = model.Fajar,
+                        Juma = model.Juma,
+                        Magrib = model.Magrib,
+                        Zohar = model.Zohar,
+                        Date = startDate.Date
+                    });
+
+                    startDate = startDate.AddDays(1);
+                }
+
                 dbContext.SaveChanges();
             }
         }
@@ -72,18 +80,18 @@ namespace Admin.Services
             using (var dbContext = new masjidayEntities())
             {
                 var masjid = dbContext.Masajids.Where(m => m.Id == model.Id).FirstOrDefault();
-                var timing = dbContext.PrayerTimings.Where(pt => pt.MasjidId == masjid.Id).FirstOrDefault();
+                //var timing = dbContext.PrayerTimings.Where(pt => pt.MasjidId == masjid.Id).FirstOrDefault();
 
                 masjid.Name = model.Name;
                 masjid.OffSet = model.OffSet;
                 masjid.CityId = 1;
 
-                timing.Isha = model.Isha;
-                timing.Asar = model.Asar;
-                timing.Fajar = model.Fajar;
-                timing.Juma = model.Juma;
-                timing.Magrib = model.Magrib;
-                timing.Zohar = model.Zohar;
+                //timing.Isha = model.Isha;
+                //timing.Asar = model.Asar;
+                //timing.Fajar = model.Fajar;
+                //timing.Juma = model.Juma;
+                //timing.Magrib = model.Magrib;
+                //timing.Zohar = model.Zohar;
 
                 dbContext.SaveChanges();
             }
@@ -124,5 +132,40 @@ namespace Admin.Services
             }
         }
 
+        public static void UpdateTiming(PrayerTimingDTO model)
+        {
+            using (var dbContext = new masjidayEntities())
+            {
+                var lstExistingPrayerTiming = dbContext.PrayerTimings.Where(m => m.MasjidId == model.MasjidId).ToList();
+
+                using (StreamReader csvReader = new StreamReader(model.FileUpload.InputStream))
+                {
+                    while (!csvReader.EndOfStream)
+                    {
+                        var line = csvReader.ReadLine();
+                        
+                        if (line.ToLower().Contains("fajar"))
+                            continue;
+
+                        var values = line.Split(',');
+
+                        dbContext.PrayerTimings.Add(new PrayerTiming
+                        {
+                            MasjidId = model.MasjidId,
+                            Fajar = TimeSpan.Parse(values[0]),
+                            Zohar = TimeSpan.Parse(values[1]),
+                            Asar = TimeSpan.Parse(values[2]),
+                            Magrib = TimeSpan.Parse(values[3]),
+                            Isha = TimeSpan.Parse(values[4]),
+                            Juma = TimeSpan.Parse(values[5]),
+                            Date = DateTime.Parse(values[6])
+                        });
+                    }
+                    dbContext.SaveChanges();
+                }
+                dbContext.PrayerTimings.RemoveRange(lstExistingPrayerTiming);
+                dbContext.SaveChanges();
+            }
+        }
     }
 }

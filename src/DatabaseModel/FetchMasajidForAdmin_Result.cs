@@ -25,5 +25,6 @@ namespace DatabaseModel
         public string Magrib { get; set; }
         public string Isha { get; set; }
         public string Juma { get; set; }
+        public string Date { get; set; }
     }
 }

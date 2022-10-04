@@ -66,6 +66,7 @@
           <Property Name="Magrib" Type="time" Precision="7" Nullable="false" />
           <Property Name="Isha" Type="time" Precision="7" Nullable="false" />
           <Property Name="Juma" Type="time" Precision="7" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="PushNotifications">
           <Key>
@@ -136,19 +137,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
-        <EntityType Name="PrayerTiming">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MasjidId" Type="Int32" Nullable="false" />
-          <Property Name="Fajar" Type="Time" Nullable="false" Precision="7" />
-          <Property Name="Zohar" Type="Time" Nullable="false" Precision="7" />
-          <Property Name="Asar" Type="Time" Nullable="false" Precision="7" />
-          <Property Name="Magrib" Type="Time" Nullable="false" Precision="7" />
-          <Property Name="Isha" Type="Time" Nullable="false" Precision="7" />
-          <Property Name="Juma" Type="Time" Nullable="false" Precision="7" />
-        </EntityType>
         <EntityType Name="PushNotification">
           <Key>
             <PropertyRef Name="Id" />
@@ -169,7 +157,6 @@
         <EntityContainer Name="masjidayEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Cities" EntityType="Self.City" />
           <EntitySet Name="Countries" EntityType="Self.Country" />
-          <EntitySet Name="PrayerTimings" EntityType="Self.PrayerTiming" />
           <EntitySet Name="PushNotifications" EntityType="Self.PushNotification" />
           <EntitySet Name="RegisteredDevices" EntityType="Self.RegisteredDevice" />
           <FunctionImport Name="FetchNotificationsForAdmin" ReturnType="Collection(masjidayModel.FetchNotificationsForAdmin_Result)">
@@ -182,6 +169,8 @@
           <EntitySet Name="AspNetUsers" EntityType="masjidayModel.AspNetUser" />
           <EntitySet Name="ReadNotifications" EntityType="masjidayModel.ReadNotification" />
           <EntitySet Name="Masajids" EntityType="masjidayModel.Masajid" />
+          <EntitySet Name="MasjidNotifications" EntityType="masjidayModel.MasjidNotification" />
+          <EntitySet Name="PrayerTimings" EntityType="masjidayModel.PrayerTiming" />
           <FunctionImport Name="FetchMasajidForAdmin" ReturnType="Collection(masjidayModel.FetchMasajidForAdmin_Result)">
             <Parameter Name="DisplayLength" Mode="In" Type="Int32" />
             <Parameter Name="DisplayStart" Mode="In" Type="Int32" />
@@ -189,7 +178,6 @@
             <Parameter Name="SortOrder" Mode="In" Type="String" />
             <Parameter Name="Search" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="MasjidNotifications" EntityType="masjidayModel.MasjidNotification" />
         </EntityContainer>
         <ComplexType Name="FetchNotificationsForAdmin_Result">
           <Property Type="Int64" Name="RowNo" Nullable="true" />
@@ -233,6 +221,28 @@
           <Property Name="CityId" Type="Int32" Nullable="false" />
           <Property Name="OffSet" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="MasjidNotification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NotificationId" Type="Int32" Nullable="false" />
+          <Property Name="MasjidId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PrayerTiming">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MasjidId" Type="Int32" Nullable="false" />
+          <Property Name="Fajar" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="Zohar" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="Asar" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="Magrib" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="Isha" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="Juma" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
         <ComplexType Name="FetchMasajidForAdmin_Result">
           <Property Type="Int64" Name="RowNo" Nullable="true" />
           <Property Type="Int32" Name="Total" Nullable="true" />
@@ -246,15 +256,8 @@
           <Property Type="String" Name="Magrib" Nullable="true" MaxLength="5" />
           <Property Type="String" Name="Isha" Nullable="true" MaxLength="5" />
           <Property Type="String" Name="Juma" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="Date" Nullable="true" MaxLength="30" />
         </ComplexType>
-        <EntityType Name="MasjidNotification">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NotificationId" Type="Int32" Nullable="false" />
-          <Property Name="MasjidId" Type="Int32" Nullable="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -275,20 +278,6 @@
               <MappingFragment StoreEntitySet="Countries">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PrayerTimings">
-            <EntityTypeMapping TypeName="masjidayModel.PrayerTiming">
-              <MappingFragment StoreEntitySet="PrayerTimings">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="MasjidId" ColumnName="MasjidId" />
-                <ScalarProperty Name="Fajar" ColumnName="Fajar" />
-                <ScalarProperty Name="Zohar" ColumnName="Zohar" />
-                <ScalarProperty Name="Asar" ColumnName="Asar" />
-                <ScalarProperty Name="Magrib" ColumnName="Magrib" />
-                <ScalarProperty Name="Isha" ColumnName="Isha" />
-                <ScalarProperty Name="Juma" ColumnName="Juma" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -359,6 +348,30 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="MasjidNotifications">
+            <EntityTypeMapping TypeName="masjidayModel.MasjidNotification">
+              <MappingFragment StoreEntitySet="MasjidNotifications">
+                <ScalarProperty Name="MasjidId" ColumnName="MasjidId" />
+                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PrayerTimings">
+            <EntityTypeMapping TypeName="masjidayModel.PrayerTiming">
+              <MappingFragment StoreEntitySet="PrayerTimings">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Juma" ColumnName="Juma" />
+                <ScalarProperty Name="Isha" ColumnName="Isha" />
+                <ScalarProperty Name="Magrib" ColumnName="Magrib" />
+                <ScalarProperty Name="Asar" ColumnName="Asar" />
+                <ScalarProperty Name="Zohar" ColumnName="Zohar" />
+                <ScalarProperty Name="Fajar" ColumnName="Fajar" />
+                <ScalarProperty Name="MasjidId" ColumnName="MasjidId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="FetchMasajidForAdmin" FunctionName="masjidayModel.Store.FetchMasajidForAdmin">
             <ResultMapping>
               <ComplexTypeMapping TypeName="masjidayModel.FetchMasajidForAdmin_Result">
@@ -374,18 +387,10 @@
                 <ScalarProperty Name="Magrib" ColumnName="Magrib" />
                 <ScalarProperty Name="Isha" ColumnName="Isha" />
                 <ScalarProperty Name="Juma" ColumnName="Juma" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="MasjidNotifications">
-            <EntityTypeMapping TypeName="masjidayModel.MasjidNotification">
-              <MappingFragment StoreEntitySet="MasjidNotifications">
-                <ScalarProperty Name="MasjidId" ColumnName="MasjidId" />
-                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

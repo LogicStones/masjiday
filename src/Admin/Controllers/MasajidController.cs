@@ -44,5 +44,30 @@ namespace Admin.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        public ActionResult UploadPrayerTimings(int? masjidId)
+        {
+            return PartialView("_UploadPrayerTimings", new PrayerTimingDTO { MasjidId = (int)masjidId });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UploadPrayerTimings(PrayerTimingDTO model)
+        {
+            if (model.FileUpload.ContentLength > 0)
+            {
+                if (System.IO.Path.GetExtension(model.FileUpload.FileName).ToLower().Equals(".csv"))
+                {
+                    MasajidManager.UpdateTiming(model);
+                    TempData["Message"] = "Masjid added successfully.";
+                }
+                else
+                    TempData["Message"] = "Failed: Invalid file type.";
+            }
+            else
+                TempData["Message"] = "Failed: File not found.";
+
+            return RedirectToAction("Index");
+        }
     }
 }

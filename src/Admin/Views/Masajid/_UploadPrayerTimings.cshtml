@@ -1,0 +1,34 @@
+﻿@model Admin.Models.PrayerTimingDTO
+
+@using (Html.BeginForm("UploadPrayerTimings", "Masajid", FormMethod.Post, new { id = "prayerTimingForm", encType = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+
+    <div class="row">
+        <div class="form-group col-xs-12 col-sm-6">
+            <div class="file-upload-control">
+                <label>Select annual prayer time updated CSV</label> <br />
+                <label class="custom-file col-xs-12">
+                    @Html.TextBoxFor(m => m.FileUpload, new { type = "file", accept = ".csv", id = "fuPrayerTiming", @class = "custom-file-input" })
+                    @Html.HiddenFor(m => m.MasjidId)
+                    <span class="custom-file-control" lang="en"></span>
+                </label>
+                <span class="has-success">
+                    <span class="form-control-feedback"></span>
+                </span>
+                <span class="has-danger">
+                    <span class="form-control-feedback"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 pull-right">
+            <input id="btnUpdate" type="submit" name="btnSubmit" class="btn btn-warning pull-right btnSubmit" value="Update" />
+            <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+}

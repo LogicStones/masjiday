@@ -1,8 +1,0 @@
-src/.vs
-src/packages
-
-src/API/bin
-src/API/obj
-
-src/DatabaseModel/bin
-src/DatabaseModel/obj
