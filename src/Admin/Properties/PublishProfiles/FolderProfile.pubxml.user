@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\Users\Ahmad Ahsan\Desktop\Publish\Masjiday\Admin</_PublishTargetUrl>
-    <History>True|2022-08-31T17:17:01.6282335Z;True|2022-08-30T17:34:28.1327406+05:00;True|2022-08-30T15:15:50.4954760+05:00;True|2022-07-20T14:09:30.8813408+05:00;True|2022-07-18T13:38:58.8830600+05:00;True|2022-07-15T23:24:03.0967051+05:00;True|2022-07-13T16:24:15.5820038+05:00;True|2022-07-07T20:53:32.4604531+05:00;True|2022-07-07T20:33:51.8572098+05:00;</History>
+    <History>True|2022-10-05T13:28:36.3369910Z;True|2022-08-31T22:17:01.6282335+05:00;True|2022-08-30T17:34:28.1327406+05:00;True|2022-08-30T15:15:50.4954760+05:00;True|2022-07-20T14:09:30.8813408+05:00;True|2022-07-18T13:38:58.8830600+05:00;True|2022-07-15T23:24:03.0967051+05:00;True|2022-07-13T16:24:15.5820038+05:00;True|2022-07-07T20:53:32.4604531+05:00;True|2022-07-07T20:33:51.8572098+05:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="Angular/MasajidManager.js">
@@ -27,10 +27,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>07/07/2022 19:58:55</publishTime>
     </File>
     <File Include="bin/Admin.dll">
-      <publishTime>10/04/2022 23:17:03</publishTime>
+      <publishTime>10/05/2022 18:28:13</publishTime>
     </File>
     <File Include="bin/Admin.pdb">
-      <publishTime>10/04/2022 23:17:03</publishTime>
+      <publishTime>10/05/2022 18:28:13</publishTime>
     </File>
     <File Include="bin/Antlr3.Runtime.dll">
       <publishTime>09/10/2013 21:29:20</publishTime>
@@ -7072,6 +7072,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     </File>
     <File Include="Views/Masajid/_AddUpdateMasjid.cshtml">
       <publishTime>10/03/2022 19:54:35</publishTime>
+    </File>
+    <File Include="Views/Masajid/_UploadPrayerTimings.cshtml">
+      <publishTime>10/04/2022 22:40:54</publishTime>
     </File>
     <File Include="Views/Masajid/__UploadPrayerTimings.cshtml">
       <publishTime>10/04/2022 22:40:54</publishTime>

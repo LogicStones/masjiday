@@ -2512,7 +2512,7 @@
     <Content Include="Views\Notifications\SendNotification.cshtml" />
     <Content Include="Views\Masajid\Index.cshtml" />
     <Content Include="Views\Masajid\_AddUpdateMasjid.cshtml" />
-    <Content Include="Views\Masajid\__UploadPrayerTimings.cshtml" />
+    <Content Include="Views\Masajid\_UploadPrayerTimings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DatabaseModel\DatabaseModel.csproj">
