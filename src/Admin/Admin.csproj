@@ -225,6 +225,7 @@
     </Compile>
     <Compile Include="Integrations\FirebaseIntegration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\APIResponseModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MasajidViewModels.cs" />

@@ -21,50 +21,50 @@ namespace API.Controllers
         ResponseEntity response = new ResponseEntity();
         masjidayEntities dbContext = new masjidayEntities();
 
-        [HttpGet]
-        [Route("countries")]
-        public HttpResponseMessage GetCountries()
-        {
-            try
-            {
-                response.Error = false;
-                response.Data = dbContext.Countries.ToList();
-                response.Message = AppMessages.msgSuccess;
-                return Request.CreateResponse(HttpStatusCode.OK, response);
-            }
-            catch (Exception ex)
-            {
-                response.Error = true;
-                response.Message = AppMessages.serverError;
-                return Request.CreateResponse(HttpStatusCode.OK, response);
-            }
-        }
+        //[HttpGet]
+        //[Route("countries")]
+        //public HttpResponseMessage GetCountries()
+        //{
+        //    try
+        //    {
+        //        response.Error = false;
+        //        response.Data = dbContext.Countries.ToList();
+        //        response.Message = AppMessages.msgSuccess;
+        //        return Request.CreateResponse(HttpStatusCode.OK, response);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response.Error = true;
+        //        response.Message = AppMessages.serverError;
+        //        return Request.CreateResponse(HttpStatusCode.OK, response);
+        //    }
+        //}
 
-        [HttpGet]
-        [Route("cities")]
-        public HttpResponseMessage GetCities(int CountryId)
-        {
-            try
-            {
-                if (CountryId <= 0)
-                {
-                    response.Error = true;
-                    response.Message = AppMessages.invalidParameters;
-                    return Request.CreateResponse(HttpStatusCode.OK, response);
-                }
+        //[HttpGet]
+        //[Route("cities")]
+        //public HttpResponseMessage GetCities(int CountryId)
+        //{
+        //    try
+        //    {
+        //        if (CountryId <= 0)
+        //        {
+        //            response.Error = true;
+        //            response.Message = AppMessages.invalidParameters;
+        //            return Request.CreateResponse(HttpStatusCode.OK, response);
+        //        }
 
-                response.Error = false;
-                response.Data = dbContext.Cities.Where(c => c.CountryId == CountryId).ToList();
-                response.Message = AppMessages.msgSuccess;
-                return Request.CreateResponse(HttpStatusCode.OK, response);
-            }
-            catch (Exception ex)
-            {
-                response.Error = true;
-                response.Message = AppMessages.serverError;
-                return Request.CreateResponse(HttpStatusCode.OK, response);
-            }
-        }
+        //        response.Error = false;
+        //        response.Data = dbContext.Cities.Where(c => c.CountryId == CountryId).ToList();
+        //        response.Message = AppMessages.msgSuccess;
+        //        return Request.CreateResponse(HttpStatusCode.OK, response);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response.Error = true;
+        //        response.Message = AppMessages.serverError;
+        //        return Request.CreateResponse(HttpStatusCode.OK, response);
+        //    }
+        //}
 
         [HttpGet]
         [Route("masajid")]
@@ -80,7 +80,7 @@ namespace API.Controllers
                 }
 
                 response.Error = false;
-                response.Data = dbContext.Masajids.Where(c => c.CityId == CityId).ToList();
+                response.Data = MasajidManager.GetMasajidByCityId(CityId);
                 response.Message = AppMessages.msgSuccess;
                 return Request.CreateResponse(HttpStatusCode.OK, response);
 
@@ -92,6 +92,8 @@ namespace API.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
         }
+
+
 
         [HttpPost]
         [Route("set-device-info")]
@@ -106,24 +108,7 @@ namespace API.Controllers
                     return Request.CreateResponse(HttpStatusCode.OK, response);
                 }
 
-                var device = dbContext.RegisteredDevices.Where(d => d.Id.Equals(model.DeviceId)).FirstOrDefault();
-
-                if (device != null)
-                {
-                    device.MasjidId = model.MasjidId;
-                    device.DeviceToken = model.DeviceToken;
-                }
-                else
-                {
-                    dbContext.RegisteredDevices.Add(new RegisteredDevice
-                    {
-                        Id = model.DeviceId,
-                        MasjidId = model.MasjidId,
-                        DeviceToken = model.DeviceToken
-                    });
-                }
-
-                dbContext.SaveChanges();
+                DevicesManager.SetDeviceInfo(model.MasjidId, model.DeviceId, model.DeviceToken);
 
                 response.Error = false;
                 response.Message = AppMessages.msgSuccess;
@@ -136,6 +121,8 @@ namespace API.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
         }
+
+
 
         [HttpPost]
         [Route("update-device-token")]
@@ -150,13 +137,7 @@ namespace API.Controllers
                     return Request.CreateResponse(HttpStatusCode.OK, response);
                 }
 
-                var device = dbContext.RegisteredDevices.Where(d => d.Id.Equals(model.DeviceId)).FirstOrDefault();
-
-                if (device != null)
-                {
-                    device.DeviceToken = model.DeviceToken;
-                    dbContext.SaveChanges();
-                }
+                DevicesManager.UpdateDeviceToken(model.DeviceId, model.DeviceToken);
 
                 response.Error = false;
                 response.Message = AppMessages.msgSuccess;
@@ -183,41 +164,8 @@ namespace API.Controllers
                     return Request.CreateResponse(HttpStatusCode.OK, response);
                 }
 
-                //var masjidTiming = dbContext.PrayerTimings.Where(c => c.MasjidId == MasjidId).FirstOrDefault();
-                var masjidTiming = dbContext.Database.SqlQuery<PrayerTiming>(@"
-SELECT m.Id, pt.MasjidId, pt.Fajar, pt.Zohar, pt.Asar, pt.Magrib, pt.Isha, pt.Juma, pt.Date
-FROM Masajid m 
-INNER JOIN PrayerTimings pt on pt.MasjidId = m.Id
-where pt.MasjidId = @masjidId AND pt.Date = convert(varchar, DATEADD(minute,m.OffSet,@currentDateTime), 101)"
-, new SqlParameter("@currentDateTime", DateTime.UtcNow)
-, new SqlParameter("@masjidId", MasjidId)).FirstOrDefault();
-
-                //Convert(varchar(5), pt.Fajar, 108) Fajar
-                //var masjidTiming = (from pt in dbContext.PrayerTimings
-                //                    join m in dbContext.Masajids on pt.MasjidId equals m.Id
-                //                    where pt.MasjidId == MasjidId && DateTime.UtcNow.AddMinutes(m.OffSet).Date == pt.Date
-                //                    select pt).FirstOrDefault();
-
-                //var masjidTiming = (from pt in dbContext.PrayerTimings
-                //                    join m in dbContext.Masajids on pt.MasjidId equals m.Id
-                //                    where pt.MasjidId == MasjidId && DateTime.UtcNow.AddMinutes(m.OffSet).Date == pt.Date
-                //                    select pt).FirstOrDefault();
-
-
+                response.Data = MasajidManager.GetPrayerTiming(MasjidId);
                 response.Error = false;
-                response.Data = new PrayerTimingModel
-                {
-                    MasjidId = masjidTiming.MasjidId,
-                    Fajar = masjidTiming.Fajar.Hours.ToString("00") + ":" + masjidTiming.Fajar.Minutes.ToString("00"),
-                    Zohar = masjidTiming.Zohar.Hours.ToString("00") + ":" + masjidTiming.Zohar.Minutes.ToString("00"),
-                    Asar = masjidTiming.Asar.Hours.ToString("00") + ":" + masjidTiming.Asar.Minutes.ToString("00"),
-                    Magrib = masjidTiming.Magrib.Hours.ToString("00") + ":" + masjidTiming.Magrib.Minutes.ToString("00"),
-                    Isha = masjidTiming.Isha.Hours.ToString("00") + ":" + masjidTiming.Isha.Minutes.ToString("00"),
-                    Juma = masjidTiming.Juma.Hours.ToString("00") + ":" + masjidTiming.Juma.Minutes.ToString("00"),
-
-                    ImageUrl = "/img/Ads/GemsTelecom.jpeg",
-                    RedirectUrl = "https://www.gemstelecom.com/"
-                };
                 response.Message = AppMessages.msgSuccess;
                 return Request.CreateResponse(HttpStatusCode.OK, response);
 
@@ -243,58 +191,8 @@ where pt.MasjidId = @masjidId AND pt.Date = convert(varchar, DATEADD(minute,m.Of
                     return Request.CreateResponse(HttpStatusCode.OK, response);
                 }
 
-                var masjidId = dbContext.RegisteredDevices.Where(rd => rd.Id.Equals(DeviceId)).FirstOrDefault().MasjidId;
-                var masjid = dbContext.Masajids.Where(m => m.Id == masjidId).FirstOrDefault();
-                var totalNotifications = dbContext.MasjidNotifications.Where(mn => mn.MasjidId == masjidId).Count();
-
-                var readNotifications = (from rn in dbContext.ReadNotifications
-                                         join mn in dbContext.MasjidNotifications on rn.NotificationId equals mn.NotificationId
-                                         where rn.DeviceId == DeviceId && mn.MasjidId == masjidId
-                                         select rn).Count();
-
-                //var readNotifications = dbContext.ReadNotifications.Where(rn => rn.DeviceId.Equals(DeviceId)).Count();
-
-                //var lstNotifications = dbContext.PushNotifications.OrderByDescending(n => n.TimeStamp).Skip(PageNo * Length).Take(Length).ToList();
-
-                var lstNotifications = (from pn in dbContext.PushNotifications
-                                        join mn in dbContext.MasjidNotifications on pn.Id equals mn.NotificationId
-                                        where mn.MasjidId == masjidId
-                                        orderby pn.TimeStamp descending
-                                        select pn).Skip(PageNo * Length).Take(Length).ToList();
-
-                var lstResponse = new List<NotificationDetails>();
-
-                foreach (var item in lstNotifications)
-                {
-                    lstResponse.Add(new NotificationDetails
-                    {
-                        Id = item.Id,
-                        Description = item.Description,
-                        Title = item.Title,
-                        TimeStamp = item.TimeStamp.AddMinutes(masjid.OffSet).ToString("dd/MM/yyyy HH:mm")
-                    });
-                }
-
-                var lstReadNotifications = dbContext.ReadNotifications.Where(d => d.DeviceId.Equals(DeviceId)).ToList();
-
-                if (lstReadNotifications.Any())
-                {
-                    foreach (var n in lstResponse)
-                    {
-                        foreach (var r in lstReadNotifications)
-                        {
-                            if (r.NotificationId == n.Id)
-                                n.IsRead = "true";
-                        }
-                    }
-                }
-
+                response.Data = NotificationsManager.GetNotificatinsByDeviceId(PageNo, Length, DeviceId);
                 response.Error = false;
-                response.Data = new PushNotificationsModel
-                {
-                    Notifications = lstResponse,
-                    UnreadNotifications = totalNotifications - readNotifications
-                };
                 response.Message = AppMessages.msgSuccess;
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
@@ -305,6 +203,7 @@ where pt.MasjidId = @masjidId AND pt.Date = convert(varchar, DATEADD(minute,m.Of
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
         }
+
 
         [HttpPost]
         [Route("read-notification")]
@@ -319,16 +218,7 @@ where pt.MasjidId = @masjidId AND pt.Date = convert(varchar, DATEADD(minute,m.Of
                     return Request.CreateResponse(HttpStatusCode.OK, response);
                 }
 
-                if (!dbContext.ReadNotifications.Where(rn => rn.NotificationId == model.NotificationId && rn.DeviceId.Equals(model.DeviceId)).Any())
-                {
-                    var device = dbContext.ReadNotifications.Add(new ReadNotification
-                    {
-                        DeviceId = model.DeviceId,
-                        NotificationId = model.NotificationId
-                    });
-
-                    dbContext.SaveChanges();
-                }
+                NotificationsManager.MarkNotificationRead(model.DeviceId, model.NotificationId);
                 response.Error = false;
                 response.Message = AppMessages.msgSuccess;
                 return Request.CreateResponse(HttpStatusCode.OK, response);
@@ -347,50 +237,7 @@ where pt.MasjidId = @masjidId AND pt.Date = convert(varchar, DATEADD(minute,m.Of
         {
             try
             {
-                var lstMasajid = dbContext.Masajids.ToList();
-                var today = DateTime.UtcNow.Date;
-                var dbPrayerTimings = dbContext.PrayerTimings.Where(pt => pt.Date == today).ToList();
-                //var dbPrayerTimings = dbContext.PrayerTimings.ToList();
-                var dbRegisteredDevices = dbContext.RegisteredDevices.ToList();
-
-                foreach (var m in lstMasajid)
-                {
-                    string prayerName = string.Empty;
-                    int minutesDifference = int.Parse(ConfigurationManager.AppSettings["PreNotificationInterval"].ToString());
-                    var currentTime = DateTime.UtcNow.AddMinutes(m.OffSet).TimeOfDay;
-
-                    var lstRegisteredDevices = dbRegisteredDevices.Where(rd => rd.MasjidId == m.Id).ToList();
-
-                    if (lstRegisteredDevices.Any())
-                    {
-                        var prayerTiming = dbPrayerTimings.Where(pt => pt.MasjidId == m.Id).FirstOrDefault();
-
-                        //data issue, every masjid must have prayer timing. Following check can be removed.
-                        if (prayerTiming == null)
-                            continue;
-
-
-                        if (prayerTiming.Fajar.Subtract(currentTime).TotalMinutes > 0 && prayerTiming.Fajar.Subtract(currentTime).TotalMinutes <= minutesDifference)
-                            prayerName = "Fajar";
-                        else if ((prayerTiming.Juma.Subtract(currentTime).TotalMinutes > 0 && prayerTiming.Juma.Subtract(currentTime).TotalMinutes <= minutesDifference && DateTime.Now.DayOfWeek == DayOfWeek.Friday) ||
-                            (prayerTiming.Zohar.Subtract(currentTime).TotalMinutes > 0 && prayerTiming.Zohar.Subtract(currentTime).TotalMinutes <= minutesDifference))
-                            prayerName = DateTime.Now.DayOfWeek == DayOfWeek.Friday ? "Juma" : "Zohar";
-                        else if (prayerTiming.Asar.Subtract(currentTime).TotalMinutes > 0 && prayerTiming.Asar.Subtract(currentTime).TotalMinutes <= minutesDifference)
-                            prayerName = "Asar";
-                        else if (prayerTiming.Magrib.Subtract(currentTime).TotalMinutes > 0 && prayerTiming.Magrib.Subtract(currentTime).TotalMinutes <= minutesDifference)
-                            prayerName = "Magrib";
-                        else if (prayerTiming.Isha.Subtract(currentTime).TotalMinutes > 0 && prayerTiming.Isha.Subtract(currentTime).TotalMinutes <= minutesDifference)
-                            prayerName = "Isha";
-
-                        if (!string.IsNullOrEmpty(prayerName))
-                        {
-                            var lstDeviceTokens = lstRegisteredDevices.Select(rd => rd.DeviceToken).ToList();
-
-                            if (lstDeviceTokens.Any())
-                                await NotificationsManager.SendPrayerNotifications(m.Name, prayerName + " Prayer after 15 minutes.", lstDeviceTokens);
-                        }
-                    }
-                }
+                await NotificationsManager.SendNotification();
                 response.Error = false;
                 response.Message = AppMessages.msgSuccess;
                 return Request.CreateResponse(HttpStatusCode.OK, response);
@@ -402,24 +249,5 @@ where pt.MasjidId = @masjidId AND pt.Date = convert(varchar, DATEADD(minute,m.Of
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
         }
-    }
-
-    public class DeviceInfoModel
-    {
-        public string DeviceId { get; set; }
-        public string DeviceToken { get; set; }
-        public int MasjidId { get; set; }
-    }
-
-    public class DeviceTokenModel
-    {
-        public string DeviceId { get; set; }
-        public string DeviceToken { get; set; }
-    }
-
-    public class ReadNotificationModel
-    {
-        public string DeviceId { get; set; }
-        public int NotificationId { get; set; }
     }
 }

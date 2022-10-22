@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace API.DTOs
+namespace Admin.Models
 {
+
     public class ImageAndRedirectUrl
     {
         public string ImageUrl { get; set; }
@@ -12,7 +13,7 @@ namespace API.DTOs
     }
 
     public class PrayerTimingModel : ImageAndRedirectUrl
-    { 
+    {
         public int MasjidId { get; set; }
         public string Fajar { get; set; }
         public string Zohar { get; set; }

@@ -5,6 +5,7 @@ using DatabaseModel;
 using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 
@@ -80,19 +81,10 @@ namespace Admin.Services
             using (var dbContext = new masjidayEntities())
             {
                 var masjid = dbContext.Masajids.Where(m => m.Id == model.Id).FirstOrDefault();
-                //var timing = dbContext.PrayerTimings.Where(pt => pt.MasjidId == masjid.Id).FirstOrDefault();
 
                 masjid.Name = model.Name;
                 masjid.OffSet = model.OffSet;
                 masjid.CityId = 1;
-
-                //timing.Isha = model.Isha;
-                //timing.Asar = model.Asar;
-                //timing.Fajar = model.Fajar;
-                //timing.Juma = model.Juma;
-                //timing.Magrib = model.Magrib;
-                //timing.Zohar = model.Zohar;
-
                 dbContext.SaveChanges();
             }
         }
@@ -132,6 +124,14 @@ namespace Admin.Services
             }
         }
 
+        public static List<Masajid> GetMasajidByCityId(int CityId)
+        {
+            using (var dbContext = new masjidayEntities())
+            {
+                return dbContext.Masajids.Where(c => c.CityId == CityId).ToList();
+            }
+        }
+
         public static void UpdateTiming(PrayerTimingDTO model)
         {
             using (var dbContext = new masjidayEntities())
@@ -165,6 +165,36 @@ namespace Admin.Services
                 }
                 dbContext.PrayerTimings.RemoveRange(lstExistingPrayerTiming);
                 dbContext.SaveChanges();
+            }
+        }
+
+
+        public static PrayerTimingModel GetPrayerTiming(int MasjidId)
+        {
+            using (var dbContext = new masjidayEntities())
+            {
+                var masjidTiming = dbContext.Database.SqlQuery<PrayerTiming>(@"
+SELECT m.Id, pt.MasjidId, pt.Fajar, pt.Zohar, pt.Asar, pt.Magrib, pt.Isha, pt.Juma, pt.Date
+FROM Masajid m 
+INNER JOIN PrayerTimings pt on pt.MasjidId = m.Id
+where pt.MasjidId = @masjidId AND pt.Date = convert(varchar, DATEADD(minute,m.OffSet,@currentDateTime), 101)"
+            , new SqlParameter("@currentDateTime", DateTime.UtcNow)
+            , new SqlParameter("@masjidId", MasjidId)).FirstOrDefault();
+
+
+                return new PrayerTimingModel
+                {
+                    MasjidId = masjidTiming.MasjidId,
+                    Fajar = masjidTiming.Fajar.Hours.ToString("00") + ":" + masjidTiming.Fajar.Minutes.ToString("00"),
+                    Zohar = masjidTiming.Zohar.Hours.ToString("00") + ":" + masjidTiming.Zohar.Minutes.ToString("00"),
+                    Asar = masjidTiming.Asar.Hours.ToString("00") + ":" + masjidTiming.Asar.Minutes.ToString("00"),
+                    Magrib = masjidTiming.Magrib.Hours.ToString("00") + ":" + masjidTiming.Magrib.Minutes.ToString("00"),
+                    Isha = masjidTiming.Isha.Hours.ToString("00") + ":" + masjidTiming.Isha.Minutes.ToString("00"),
+                    Juma = masjidTiming.Juma.Hours.ToString("00") + ":" + masjidTiming.Juma.Minutes.ToString("00"),
+
+                    ImageUrl = "/img/Ads/GemsTelecom.jpeg",
+                    RedirectUrl = "https://www.gemstelecom.com/"
+                };
             }
         }
     }
